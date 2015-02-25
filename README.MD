@@ -2,9 +2,9 @@ Brahma.screens
 --
 
 ## Usage
-To make it work you need BrahmaJs lib and right structore of document.
+To make it work, you need [BrahmaJs](https://github.com/morulus/brahma) lib and right structure of document.
 
-Create a node element and give it id (or some other identifier). Put in that node another elements. That elements will be your screens. 
+Create a node element and give it id (or some other selector). Put in that node another elements. This children elements will be your screens. 
 Mark the position of screens by attributes data-x and data-y (when data-x - is X coord, data-y - is Y coord in the grid, capish?)
 ```html
 <div id="screens">
@@ -15,11 +15,17 @@ Mark the position of screens by attributes data-x and data-y (when data-x - is X
 ```
 Ok. That's enough.
 
-Now, run application of Brahma:
+Now, run application of Brahma with created earlier selector:
 ```javascript
 Brahma("#screens").app('screens');
 ```
 
-I should work.
-Look up for [example](http://)
+It should work.
+If doesn't. Look up for [example](http://morulus.github.io/brahma.screens/)
+
+## License
+MIT
+
+## Author
+[@morulus](ttps://github.com/morulus/)
 
