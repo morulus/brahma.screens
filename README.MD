@@ -27,5 +27,5 @@ If doesn't. Look up for [example](http://morulus.github.io/brahma.screens/)
 MIT
 
 ## Author
-[@morulus](ttps://github.com/morulus/)
+[@morulus](https://github.com/morulus/)
 
