@@ -1,5 +1,6 @@
 Brahma.screens
 --
+Amazing widget for creating effect of travels around the screens
 
 ## Usage
 To make it work, you need [BrahmaJs](https://github.com/morulus/brahma) lib and right structure of document.
