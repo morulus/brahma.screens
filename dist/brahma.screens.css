@@ -1,0 +1,181 @@
+@font-face {
+	font-family: 'bsn';
+	src:url('fonts/bsn.eot?dhy9xe');
+	src:url('fonts/bsn.eot?#iefixdhy9xe') format('embedded-opentype'),
+		url('fonts/bsn.woff?dhy9xe') format('woff'),
+		url('fonts/bsn.ttf?dhy9xe') format('truetype'),
+		url('fonts/bsn.svg?dhy9xe#bsn') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.brahma-widgets-screens {
+	position:relative;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+
+
+.brahma-widgets-screens > div:first-child {
+	position:absolute;
+	width:100%;
+	height:100%;
+
+	-webkit-perspective: 1000;
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+
+	-webkit-transition:-webkit-transform 1s ease;
+	-moz-transition:-moz-transform 1s ease;
+	-ms-transition:-ms-transform 1s ease;
+	-o-transition:-o-transform 1s ease;
+	transition:transform 1s ease;
+}
+
+.brahma-widgets-screens > div.noTransit {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  transition: none !important;
+}
+
+.brahma-widgets-screens > div:first-child > * {
+	position:absolute;
+	width:100%;
+	height:100%;
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-map {
+	position:absolute;
+	right:68px;
+	bottom:166px;
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-map > div.screen-box-layer {
+	clear:both;
+
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-map > div.screen-box-layer > div {
+	float:left;
+	width:12px;
+	height:12px;
+	background-color:rgba(255,255,255,0.5);
+	margin:0 2px 2px 0;
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-map > div.screen-box-layer > div.screen-box-empty {
+	background-color:transparent;
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-map > div.screen-box-layer > div.screen-box-item {
+	cursor:pointer;
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-map > div.screen-box-layer > div.current {
+	background-color:#fff;
+}
+
+.brahma-widgets-screens > {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+}
+
+.brahma-widgets-screens > [class^="dharma-widgets-screens-navigation-"],
+.brahma-widgets-screens > [class*=" dharma-widgets-screens-navigation-"] > * {
+	width:44px;
+	height:44px;
+	margin:auto;
+	position:absolute;
+	cursor:pointer;
+
+	font-family: 'bsn';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	-webkit-transition:-webkit-transform 0.35s ease;
+	-ms-transition:-ms-transform 0.35s ease;
+	transition:transform 0.35s ease;
+
+	color:white;
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-navigation-down {
+	font-size:15px;
+	bottom:100px;
+	left:0;right:0;
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-navigation-up {
+	font-size:15px;
+	top:100px;
+	left:0;right:0;
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-navigation-right {
+	font-size:29px;
+	top:0;bottom:0;
+	right:100px;
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-navigation-left {
+	font-size:29px;
+	top:0;bottom:0;
+	left:100px;
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-navigation-down.hidden {
+	-webkit-transform:translateY(200px);
+	-ms-transform:translateY(200px);
+	transform:translateY(200px);
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-navigation-up.hidden {
+	-webkit-transform:translateY(-200px);
+	-ms-transform:translateY(-200px);
+	transform:translateY(-200px);
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-navigation-left.hidden {
+	-webkit-transform:translateX(-200px);
+	-ms-transform:translateX(-200px);
+	transform:translateX(-200px);
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-navigation-right.hidden {
+	-webkit-transform:translateX(200px);
+	-ms-transform:translateX(200px);
+	transform:translateX(200px);
+}
+
+.brahma-widgets-screens > .dharma-widgets-screens-navigation-down:before { content: "\e603"; }
+.brahma-widgets-screens > .dharma-widgets-screens-navigation-up:before { content: "\e604"; }
+.brahma-widgets-screens > .dharma-widgets-screens-navigation-left:before { content: "\e601"; }
+.brahma-widgets-screens > .dharma-widgets-screens-navigation-right:before { content: "\e602"; }
+
+@media screen and (min-width:920px) {
+	.brahma-widgets-screens > .dharma-widgets-screens-navigation-left {
+		font-size:44px;
+	}
+	.brahma-widgets-screens > .dharma-widgets-screens-navigation-right {
+		font-size:44px;
+	}
+	.brahma-widgets-screens > .dharma-widgets-screens-navigation-up {
+		font-size:22px;
+	}
+	.brahma-widgets-screens > .dharma-widgets-screens-navigation-down {
+		font-size:22px;
+	}
+}

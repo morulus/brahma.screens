@@ -1,0 +1,149 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700&subset=latin,cyrillic);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,600,400&subset=latin,cyrillic);
+@import url(http://fonts.googleapis.com/css?family=Lato:100,300);
+
+body {
+	background:black;
+	padding:0px;
+	margin:0px;
+}
+
+#screens {
+	position:absolute;
+}
+
+#tutorial-keyboard {
+	position: absolute;
+	left:20px;bottom:20px;
+	display:table;
+	padding: 30px;
+	background-color: transparent;
+	border-radius: 15px;
+}
+
+#tutorial-keyboard > * {
+	margin:0 auto;
+	display:table;
+}
+
+#infoblock {
+	position: absolute;
+	left:20px;bottom:20px;
+}
+
+#screens .screen {
+	background-position:center center;
+	background-repeat: no-repeat;
+	background-color:transparent;
+	background-size:cover;
+}
+
+#screens .screen > article {
+	position:absolute;
+	top:0;bottom:0;left:0;right:0;
+	margin:auto;
+	color:white;
+	font-family: 'Lato', "Arial";
+	
+	font-weight:100;
+	display: table;
+	width: 50%;
+	text-align: center;
+}
+
+#screens .screen > article.panel {
+	background-color:rgba(0,0,0,0.85);
+	border-radius: 16px;
+	padding:20px 20px;
+	text-align:left;
+}
+
+#screens .screen > article summary {
+	font-family:"Roboto", "Arial";
+	font-size:15px;
+	font-weight: 100;
+	text-align:center;
+}
+
+#screens .screen > article summary a {
+	font-family:"Roboto", "Arial";
+	font-size:15px;
+	font-weight: 400;
+	color:rgb(229, 229, 255);
+}
+
+#screens .screen > article h1 {
+	color:white;
+	font-family: 'Lato', "Arial";
+	font-size:78px;
+	font-weight:100;
+	display: block;
+	width: auto;
+	text-align: center;
+	margin:40px 0 5px 0;
+	line-height:40px;
+}
+
+#screens .screen > article h2 {
+	color:white;
+	font-family: 'Lato', "Arial";
+	font-size:70px;
+	font-weight:100;
+	display: block;
+	width: auto;
+	text-align: center;
+	margin:40px 0 60px 0;
+	line-height:40px;
+	text-shadow: 0px 3px 2px #000;
+}
+
+#screens .screen > article h3 {
+	color:white;
+	font-family: 'Roboto', "Arial";
+	font-size:24px;
+	font-weight:100;
+	display: block;
+	width: auto;
+	text-align: center;
+	margin:0 0 20px 0;
+	line-height:40px;
+	text-shadow: 0px 3px 2px #000;
+	letter-spacing: 2px;
+}
+
+#screens .screen > article h2.black {
+	color:rgb(26, 26, 26);
+	font-weight: 400;
+	font-size:56px;
+	text-shadow: 0px 3px 2px rgba(255,255,255,0.8);
+}
+
+#screens .screen > article h2.strong {
+	text-shadow: 0px 3px 2px #000;
+	font-weight: 400;
+}
+
+#screens .screen > article a {
+	text-decoration: none;
+	cursor:pointer;
+}
+
+#screens .screen > article a button {
+	-webkit-transition:background 0.25s ease;
+	transition:background 0.25s ease;
+	border-radius: 16px;
+	background-color:rgba(0, 0, 255, 0.49);
+	color:white;
+	font-family: "Roboto Condensed","Arial";
+	font-weight:400;
+	text-align:center;
+	border:0;
+	line-height:50px;
+	padding:0 20px;
+	font-size: 24px;
+	cursor:pointer;
+}
+
+#screens .screen > article a:hover button {
+	background-color:rgba(0, 0, 255, 0.8);
+}

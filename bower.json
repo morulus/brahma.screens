@@ -1,0 +1,27 @@
+{
+  "name": "brahma.screens",
+  "version": "1.0.0",
+  "authors": [
+    "Morulus <vladimirmorulus@gmail.com>"
+  ],
+  "description": "Plugin for BrahmaJs",
+  "main": [
+    "dist/brahma.screens.js",
+    "dist/brahma.screens.css",
+    "dist/fonts/bsn.eot",
+    "dist/fonts/bsn.svg",
+    "dist/fonts/bsn.ttf",
+    "dist/fonts/bsn.woff"
+  ],
+  "moduleType": [
+  ],
+  "keywords": [
+    "brahmajs",
+    "screens"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/morulus/brahma.screens",
+  "dependencies": {
+    "brahma": ">=1.3.2"
+  }
+}
