@@ -3,58 +3,67 @@
 <html lang="en">
 	<head>
 		<title>Brahma.screens widget</title>
-			<script src="demo/brahma.min.js" type="text/javascript"></script>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<script src="demo/vendor.js" baseurl="/" type="text/javascript"></script>
+			<script src="demo/brahma.js" type="text/javascript"></script>
+			<script src="demo/brahma.touch.js" type="text/javascript"></script>
+			<script src="demo/highlight.min.js"></script>
 			
 			<script src="dist/brahma.screens.js" type="text/javascript"></script>
 			<link href="dist/brahma.screens.css" rel="stylesheet">
 			<link href="demo/style/main.css" rel="stylesheet">
+
+			<link rel="stylesheet" href="demo/style/hightlight-style.css" />
+
+			<script>hljs.initHighlightingOnLoad();</script>
 	</head>
 	<body class="mrls">
-
-	
-			
 			<div id="screens">
-				<div style="background-image:url(demo/images/demo/6.jpg)" data-x="0" data-y="0" class="screen current">
-					<article>
-						<h1>Screens</h1>
-						<h3>widget of BrahmaJs</h3>
-						
+				<div style="background-image:url(demo/images/demo/6.jpg)" data-screen-x="0" data-screen-y="0" data-screen-page="" class="screen current">
+					<article class="screen-effect-fade">
+						<h2>Brahma.Screens</h2>
+						<h3>Parallax fullscreen slider</h3>
 					</article>
 				</div>
-				<div style="background-image:url(demo/images/demo/2.jpg)" data-x="1" data-y="0" class="screen">
-					<article>
-						<h2 class="black">Hi-tech</h2>
+				<div style="background-image:url(demo/images/demo/2.jpg)" data-screen-x="1" data-screen-y="0" data-screen-page="1.html" class="screen">
+					<article class="screen-effect-zoom">
+						<h2 class="black">Just like you imagined</h2>
 					</article>
 				</div>
-				<div style="background-image:url(demo/images/demo/3.jpg)" data-x="2" data-y="0" class="screen">
-					<article>
-						<h2 class="strong">Exquisitely</h2>
+				<div style="background-image:url(demo/images/demo/3.jpg)" data-screen-x="2" data-screen-y="0" data-screen-page="2.html" class="screen">
+					<article class="screen-effect-perspective">
+						<h2 class="strong">Supports touch screens, works well on tablet.</h2>
+						<center>
+							FF,Safari,Chrome,Opera,IE10+ (IE9 partial support)
+						</center>
 					</article>
 				</div>
-				<div style="background-image:url(demo/images/demo/4.jpg)" data-x="1" data-y="1" class="screen">
-					<article>
-						<h2>Strong</h2>
+				<div style="background-image:url(demo/images/demo/4.jpg)" data-screen-x="1" data-screen-y="1" data-screen-page="3.html" class="screen">
+					<article class="screen-effect-fade">
+						<h1>One does not simply write the slider!</h1>
+						<h3>It is a barren wasteland, riddled with bugs and lags and missed semicolon... but i did it.</h3>
+
 					</article>
 				</div>
-				<div style="background-image:url(demo/images/demo/5.jpg)" data-x="2" data-y="1" class="screen">
-					<article>
-						<h2>Perspicaciously</h2>
+				<div style="background-image:url(demo/images/demo/5.jpg)" data-screen-x="2" data-screen-y="1" data-screen-page="4.html" class="screen">
+					<article class="screen-effect-lukas">
+						<h2>Full HD</h2>
 					</article>
 				</div>
-				<div style="background-image:url(demo/images/demo/1.jpg)" data-x="3" data-y="1" class="screen">
+				<div style="background-image:url(demo/images/demo/1.jpg)" data-screen-x="3" data-screen-y="1" data-screen-page="5.html" class="screen">
 					<article>
-						<h2>Famous!</h2>
+						<h1>Creative free</h1>
 					</article>
 				</div>
-				<div style="background-image:url(demo/images/demo/7.jpg)" data-x="2" data-y="2" class="screen">
-					<article>
-						<h2>Quick</h2>
-					</article>
-				</div>
-				<div style="background-image:url(demo/images/demo/8.jpg)" data-x="3" data-y="2" class="screen">
-					<article>
-						<h3></h3>
-						<a href="http://github.com/morulus/brahma.screens/"><button>Fork it on Github</button></a>
+				<img src="demo/images/demo/7.jpg" alt="" data-screen-x="2" data-screen-y="2" data-screen-page="6.html" />
+				<div data-screen-x="3" data-screen-y="2" class="screen bluegrd" data-screen-page="about.html">
+					<article class="screen-effect-lukas">
+						<big>Brahma.screens v.<span id="version">0.0.0</span></big>
+						<center>
+							<a href="http://github.com/morulus/brahma.screens/"><button>Documentation</button></a>
+							<a href="http://github.com/morulus/brahma.screens/"><button>Download example</button></a>
+							<a href="http://github.com/morulus/brahma.screens/"><button>Watch it on Github</button></a>
+						</center>
 						<summary>Copyrights © <a href="http://github.com/morulus/">Vladimir Kalmykov (@morulus)</a> 2015. <a href="http://github.com/morulus/brahma.screens/blob/gh-pages/LICENSE.MD">The MIT License.</a></summary> 
 					</article>
 				</div>
@@ -63,7 +72,7 @@
 			<div class="centered">
 				<div id="tutorial-keyboard"><img src="demo/images/tutorial-keyboard.png" alt=""></div>
 			</div>
-			<a href="https://github.com/morulus/brahma.screens"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+			
 		
 		<script>
 			Brahma("#screens").app('screens', {
@@ -73,6 +82,9 @@
 			.bind('keydown', function() {
 				Brahma("#tutorial-keyboard").css(['-webkit-'],{'transition':'opacity 1s ease'}).css({'opacity': 0});
 			}, true);
+			vendor.getJson('bower.json', function(data) {
+				Brahma("#version").html(data.version);
+			});
 		</script>
 
 	</body>

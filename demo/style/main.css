@@ -3,7 +3,7 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:100,300);
 
 body {
-	background:black;
+	background-color:black;
 	padding:0px;
 	margin:0px;
 }
@@ -31,6 +31,34 @@ body {
 	left:20px;bottom:20px;
 }
 
+#screens pre {
+	display:block;
+	max-width:100%;
+	font-size:16px;
+}
+
+#screens center {
+	padding:0 0 20px 0;
+}
+
+#screens .row {
+	margin:0 -20px 0 0;
+}
+
+#screens .row:after {
+	content:"";
+	clear:both;
+	display:block;
+}
+
+#screens .row .col-md-6 {
+	width: 49%;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: top;
+	padding: 0 20px 0 0;
+}
+
 #screens .screen {
 	background-position:center center;
 	background-repeat: no-repeat;
@@ -47,8 +75,15 @@ body {
 	
 	font-weight:100;
 	display: table;
-	width: 50%;
+	width: 75%;
 	text-align: center;
+}
+
+#screens .screen > article.topleft {
+	top:20px;
+	left:100px;
+	margin:0;
+	width:auto;
 }
 
 #screens .screen > article.panel {
@@ -63,6 +98,7 @@ body {
 	font-size:15px;
 	font-weight: 100;
 	text-align:center;
+	color:black;
 }
 
 #screens .screen > article summary a {
@@ -73,35 +109,40 @@ body {
 }
 
 #screens .screen > article h1 {
-	color:white;
+	color:rgb(255,255,255);
 	font-family: 'Lato', "Arial";
-	font-size:78px;
+	font-size:82px;
 	font-weight:100;
 	display: block;
 	width: auto;
 	text-align: center;
 	margin:40px 0 5px 0;
-	line-height:40px;
 }
 
 #screens .screen > article h2 {
 	color:white;
 	font-family: 'Lato', "Arial";
 	font-size:70px;
-	font-weight:100;
+	font-weight:600;
 	display: block;
 	width: auto;
 	text-align: center;
 	margin:40px 0 60px 0;
 	line-height:40px;
-	text-shadow: 0px 3px 2px #000;
+	text-shadow: 0 0 4px rgba(255, 255, 255, 0.74);
 }
+
+#screens .screen > article h2.glamo {
+	color:rgb(0, 0, 0);
+	font-size:120px;
+}
+
 
 #screens .screen > article h3 {
 	color:white;
-	font-family: 'Roboto', "Arial";
+	font-family: 'Roboto Condensed', "Arial";
 	font-size:24px;
-	font-weight:100;
+	font-weight:600;
 	display: block;
 	width: auto;
 	text-align: center;
@@ -123,6 +164,19 @@ body {
 	font-weight: 400;
 }
 
+#screens .screen > article big {
+	color:rgb(0, 27, 56);
+	font-family: 'Roboto Condensed', "Arial";
+	font-size:58px;
+	font-weight:100;
+	display: block;
+	width: auto;
+	text-align: center;
+	margin:0 0 20px 0;
+	line-height:40px;
+}
+
+
 #screens .screen > article a {
 	text-decoration: none;
 	cursor:pointer;
@@ -132,7 +186,7 @@ body {
 	-webkit-transition:background 0.25s ease;
 	transition:background 0.25s ease;
 	border-radius: 16px;
-	background-color:rgba(0, 0, 255, 0.49);
+	background-color:rgba(3, 86, 179, 1);
 	color:white;
 	font-family: "Roboto Condensed","Arial";
 	font-weight:400;
@@ -145,5 +199,19 @@ body {
 }
 
 #screens .screen > article a:hover button {
-	background-color:rgba(0, 0, 255, 0.8);
+	background-color:rgba(0, 62, 131, 1);
+}
+
+/* Backgrounds */
+
+#screens .screen.bluegrd {
+	background: #7db9e8; /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  #7db9e8 0%, #2989d8 50%, #1e5799 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#7db9e8), color-stop(50%,#2989d8), color-stop(100%,#1e5799)); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  #7db9e8 0%,#2989d8 50%,#1e5799 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  #7db9e8 0%,#2989d8 50%,#1e5799 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  #7db9e8 0%,#2989d8 50%,#1e5799 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  #7db9e8 0%,#2989d8 50%,#1e5799 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7db9e8', endColorstr='#1e5799',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
 }

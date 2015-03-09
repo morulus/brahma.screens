@@ -3,7 +3,7 @@
 		config: {
 			infinity: false, // Бесконечное пролистывание
 			lockDelay: false, // Задержка после перемещения перед тем как будет разрещено ещё одно действие
-			easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+			easing: 'cubic-bezier(.43,.2,.46,.8)',
 			duration: 1000, // Длительность анимации
 			/*
 			options infinityMethod: 
@@ -21,21 +21,28 @@
 			 
 			[false]аналогично отключению режима infiniry 
 			*/
-			infinityMethod: 'passage' // Определяет тип портального перехода (false, `passage`,`discover`)
-			
+			infinityMethod: 'passage', // Определяет тип портального перехода (false, `passage`,`discover`)
+			touch: true,
+			autoFillImages: true, 
+			deadlockEffect: true, // Эффект показывает, что дальше движение невозможно
+			mobileMap: true, // На мобильных устройствах при анимации увеличивается мини-карта и отображается по центру экрана
 		},
 		data: {
 			currentScreen: [0,0],
 			shift: {
 				x:0,y:0
 			},
-			moving: false,
+			advshift: {
+				x:0,y:0
+			},
+			moving: 0,
 			movingStartTime:0,
 			movingEndTime:0,
 			maxX: 0,
 			maxY: 0,
 			minX: 0,
-			minY: 0
+			minY: 0,
+			locks: false // Блокировка новый движений и действий
 		},
 		modules: {
 
@@ -53,7 +60,6 @@
 
 		},
 		run: function() {
-			console.log('run');
 			var that = this;
 			// Convert inner content to grid
 			Brahma(this.selector).find('>*').wrapAll('div', {
@@ -65,14 +71,26 @@
 			Brahma(this.selector).addClass('brahma-widgets-screens');
 			// Build grid
 			Brahma(this.htmlelements.screensWrapper).find('>*').each(function() {
-				var xy = that.reserveCell(parseInt(Brahma(this).data("x")),parseInt(Brahma(this).data("y")), this); 
+				var element = this;
+				/*
+					Автоматческое преобразование IMG в DIV
+				*/
 
-				Brahma(this).css({
+				if (that.config.autoFillImages && Brahma(element)[0].tagName.toLowerCase()==='img') {
+					var src = Brahma(element).attr("src");
+					element=Brahma(element).replace(document.createElement('DIV'), true).css({
+						"background-image": "url(\""+src+"\")"
+					});
+				};
+
+				var xy = that.reserveCell(parseInt(Brahma(element).data("screen-x")),parseInt(Brahma(element).data("screen-y")), element); 
+
+				Brahma(element).css({
 					left: ((xy[0])*100)+'%',
 					top: ((xy[1])*100)+'%'
 				});
 
-				if (Brahma(this).hasClass("current"))
+				if (Brahma(element).hasClass("current"))
 				that.data.currentScreen = xy;
 			});
 
@@ -104,20 +122,12 @@
 			this.rebuildMap();
 
 			// Set transition
-			Brahma(this.htmlelements.screensWrapper).css({
-				'-webkit-transition-duration': this.config.duration+'ms',
-				'-ms-transition-duration': this.config.duration+'ms',
-				'-o-transition-duration': this.config.duration+'ms',
-				'-moz-transition-duration': this.config.duration+'ms',
+			Brahma(this.htmlelements.screensWrapper).css(['-webkit-','-ms-','-o-','-moz-'],{
 				'transition-duration': this.config.duration+'ms'
 			});
 
-			Brahma(this.htmlelements.screensWrapper).css({
-				'-webkit-transition-timing-function': this.config.ease,
-				'-ms-transition-timing-function': this.config.ease,
-				'-o-transition-timing-function': this.config.ease,
-				'-moz-transition-timing-function': this.config.ease,
-				'transition-timing-function': this.config.ease
+			Brahma(this.htmlelements.screensWrapper).css(['-webkit-','-ms-','-o-','-moz-'],{
+				'transition-timing-function': this.config.easing
 			});
 
 			// Run keylistner
@@ -126,14 +136,21 @@
 			if (this.config.infinity)
 			this.module('infinity').run();
 
+			// Run touch support
+			if (this.config.touch)
+			this.module('touch');
+
+			if (Brahma.caniuse('mobile') && this.config.mobileMap)
+			this.module('mobileMap');
+
 			// Select curren
-			this.goto(this.data.currentScreen);
+			this.goto(this.data.currentScreen, true);
 		},
 		up: function() {
 			if (!this.canIMove()) return false;
 			
 			switch (this.canIMoveUp()) {
-				case false: return false; break;
+				case false: return this.module('edgeEffect').up(); break;
 				case 2: this.trigger('beforeMove',['up']); this.modules.infinity.portalMove('up'); break;
 				case true: this.trigger('beforeMove',['up']); this.goto([this.data.currentScreen[0], this.data.currentScreen[1]-1]); break;
 			}
@@ -142,7 +159,7 @@
 			if (!this.canIMove()) return false;
 			
 			switch (this.canIMoveDown()) {
-				case false: return false; break;
+				case false: return this.module('edgeEffect').down(); break;
 				case 2: this.trigger('beforeMove',['down']); this.modules.infinity.portalMove('down'); break;
 				case true: this.trigger('beforeMove',['down']); this.goto([this.data.currentScreen[0], this.data.currentScreen[1]+1]); break;
 			}
@@ -151,7 +168,7 @@
 			if (!this.canIMove()) return false;
 			
 			switch (this.canIMoveLeft()) {
-				case false: return false; break;
+				case false: return this.module('edgeEffect').left(); break;
 				case 2: this.trigger('beforeMove',['left']);this.modules.infinity.portalMove('left'); break;
 				case true: this.trigger('beforeMove',['left']); this.goto([this.data.currentScreen[0]-1, this.data.currentScreen[1]]); break;
 			}
@@ -160,7 +177,7 @@
 			if (!this.canIMove()) return false;
 			
 			switch (this.canIMoveRight()) {
-				case false: return false; break;
+				case false: return this.module('edgeEffect').right(); break;
 				case 2: this.trigger('beforeMove',['right']); this.modules.infinity.portalMove('right'); break;
 				case true: this.trigger('beforeMove',['right']); this.goto([this.data.currentScreen[0]+1, this.data.currentScreen[1]]); break;
 			}
@@ -300,6 +317,7 @@
 		Дает разрешение да движение  
 		*/
 		canIMove : function() {
+			if (this.data.locks) return false;
 			if (this.config.lockDelay===true) {
 				if (this.data.moving) return false;
 				return true;
@@ -362,6 +380,15 @@
 			});
 			("function"===typeof callback) && callback();
 		},
+		translate: function(x, y) {
+			var polytransform = ["-webkit-","-ms-","-o-"];
+			
+			var transform = (Brahma.caniuse('translate3D')) ?
+			"translate3D("+(x+(this.data.shift.x*100)+this.data.advshift.x)+"%,"+(y+(this.data.shift.y*100)+this.data.advshift.y)+"%,0)" :
+			"translateX("+(x+(this.data.shift.x*100)+this.data.advshift.x)+"%) translateY("+(y+(this.data.shift.y*100)+this.data.advshift.y)+"%)";
+			
+			Brahma(this.htmlelements.screensWrapper).css(polytransform, {"transform": transform});
+		},
 		moveScreen: function(x, y, immediately, callback) {
 			
 			var callback = callback||false;
@@ -374,20 +401,9 @@
 			При каждом перемещении мы должны учитывать смещении в режиме infinity 
 			this.master.data.shift 
 			*/
-			var absx = this.data.shift.x+(x*-1);
-			var absy = this.data.shift.y+(y*-1);
-
-			var polytransform = ["-webkit-","-ms-","-o-",""];
-			var style = {};
-			var transform = (Brahma.caniuse('translate3D')) ?
-			"translate3D("+(absx*100)+"%,"+(absy*100)+"%,0)" :
-			"translateX("+(absx*100)+"%) translateY("+(absy*100)+"%)";
-			for(var t=0;t<polytransform.length;t++) {
-				
-				style[polytransform[t]+"transform"] = transform;
-			}
-
-			Brahma(this.htmlelements.screensWrapper).css(style);
+			var absx = (x*-1);
+			var absy = (y*-1);
+			this.translate( (absx*100), (absy*100));
 
 			if (immediately) {
 				/*
@@ -411,25 +427,33 @@
 				}, this.config.duration);
 			}
 		},
-		goto : function(xy, callback) {
+		goto : function(xy, immediately, callback) {
 
 			if (!this.canIMove()) {
 				return false; // Запрет на движение, но это не должно происходить в этой функции
 			}
 			this.data.currentScreen = xy;
+
+			// Add class to node
+			Brahma(this.htmlelements.screensWrapper).find('>*').removeClass('current');
+			Brahma(this.grid[xy[1]][xy[0]].node).addClass('current');
+
 			var x = xy[0];
 			var y = xy[1];
 
 
 			this.data.movingStartTime = new Date().getTime();
-			this.data.moving = true;
+			this.data.moving++;
 			var that = this;
-			console.log('invoke move');
-			this.moveScreen(x,y, false, function() {
-				console.log('moved');
+			this.trigger('movingStart');
+			this.moveScreen(x,y, immediately||false, function() {
+				
 				that.data.movingEndTime = new Date().getTime();
-				that.data.moving = false;
+				that.data.moving--;
+				that.trigger('movingEnd');
 			});
+
+
 
 			/*
 			Расчет появления и исчезновения кнопок навигации  зависит не тольок 
@@ -508,8 +532,12 @@
 
 			this.grid[y][x] = {
 				node: el,
-				active: Brahma(el).hasClass('screen-box-item')
+				active: Brahma(el).hasClass('screen-box-item'),
+				onVisible: []
 			};
+
+			// Событие добавления экрана в схему
+			this.trigger('gridAdds',[this.grid[y][x]]);
 
 			// Оставляем информацию о максимальном слайде по вертикали и по горизонтали
 			if (y>this.data.maxY) this.data.maxY = y;
@@ -518,56 +546,32 @@
 			if (y<this.data.minY) this.data.minY = y;
 
 			return [x,y];
-		},
-		module: function(a, b, c) {
-			
-			var globalName, initial, data;
-			(arguments.length>2) && (globalName=a,data=b,initial=c);
-			(arguments.length==2) && (globalName=a,data=b,initial=false);
-			(arguments.length==1) && (globalName=a,initial=false,data=false);
-
-			if (data) {
-				// Создаем инициализатор модуля
-				this.modules[globalName] = function() {
-					return (initial || function() {return this;}).call((function(master, globalName, data) {
-						var m = Brahma.industry.createModule().assing(data);
-						m.master = master;
-						return m;
-					})(this, globalName, data));
-				};
-			} else {
-				if ("function"==typeof this.modules[globalName]) this.modules[globalName] = this.modules[globalName].call(this);
-			}
-
-			return this.modules[globalName];
-		},
-		effect: function(a, b, c) {
-			
-			var globalName, initial, data;
-			(arguments.length>2) && (globalName=a,data=b,initial=c);
-			(arguments.length==2) && (globalName=a,data=b,initial=false);
-			(arguments.length==1) && (globalName=a,initial=false,data=false);
-
-			if (data) {
-				// Создаем инициализатор модуля
-				this.effects[globalName] = function() {
-					return (initial || function() {return this;}).call((function(master, globalName, data) {
-						var m = Brahma.module(data);
-						m.master = master;
-						return m;
-					})(this, globalName, data));
-				};
-			} else {
-				if ("function"==typeof this.effects[globalName]) this.effects[globalName] = this.effects[globalName].call(this);
-			}
-
-			return this.effects[globalName];
 		}
 	});
 })(Brahma);
 
 // ADDITIONAL MODULES
 
+/*
+Поддержка тач событий
+*/
+Brahma.app('screens').module('touch', function() {
+
+	this.listner = Brahma(this.master.selector[0]).app('touch', {
+		simpleMoves: true,
+		minMoveX: 30,
+		minMoveY: 30,
+		preventDefaultEvents: false
+	});
+
+	var that = this;
+	this.listner.bind('swipeLeft', function() {	console.log('swipe left'); that.master.right(); });
+	this.listner.bind('swipeRight', function() { console.log('swipe right'); that.master.left(); });
+	this.listner.bind('swipeUp', function() { that.master.up();	});
+	this.listner.bind('swipeDown', function() {	that.master.down();	});
+}, {
+	listner: null
+});
 
 /*
 Listen keys 
@@ -652,37 +656,71 @@ Brahma.app('screens').module('preloader', {
 });
 
 /*
-SLIDESHOW  
+Edge effect
 */
-Brahma.app('screens').module('slideshow', {
-	timer: 0,
-	paused: false,
-	run: function() {
+Brahma.app('screens').module('edgeEffect', {
+	mod: function(coord, direct) {
+		if (!this.master.config.deadlockEffect || this.master.data.moving) return false;
+		this.master.data.advshift[coord] = 25*direct;
+		this.master.translate(this.master.data.currentScreen[0]*-100, this.master.data.currentScreen[1]*-100);
+
 		var that = this;
-		if (!this.paused) {
-			
-			this.timer = setInterval(function() {
-				that.master.next();
-			}, this.master.config.slideshowDelay);
-		}
-		
-		
+		setTimeout(function() {
+			that.master.data.advshift[coord] = 0;
+			that.master.translate(that.master.data.currentScreen[0]*-100, that.master.data.currentScreen[1]*-100);
+		}, 100);
+		return false;
 	},
-	clear: function() {
-		if (this.timer>0) clearInterval(this.timer);
+	up: function() {
+		return this.mod('y',1);
 	},
-	pause: function() {
-		if (this.timer>0) clearInterval(this.timer);
-		this.paused = true;
+	down: function() {
+		return this.mod('y',-1);
 	},
-	resume: function() {
-
-		if (this.paused) {
-			this.paused = false;
-			if (this.master.config.slideshow) this.run();
-
-		}
+	left: function() {
+		return this.mod('x',1);
+	},
+	right: function() {
+		return this.mod('x',-1);
 	}
+});
+
+Brahma.app('screens').module('mobileMap', function() {
+	var that = this;
+
+	Brahma(this.master.htmlelements.map).addClass('mobile');
+
+	this.master.bind('movingStart', function() {
+		
+		that.zoomMap();
+	});
+
+	this.master.bind('movingEnd', function() {
+		
+		that.tryUnZoomMap();
+	});
+}, {
+	zoomMap: function() {
+		Brahma(this.master.htmlelements.map).addClass('visible');
+	},
+	tryUnZoomMap: function() {
+		var that = this;
+		setTimeout(function() {
+			if (!that.master.data.moving) that.unZoomMap();
+		}, 150);
+	},
+	unZoomMap: function() {
+		Brahma(this.master.htmlelements.map).removeClass('visible');
+	}
+});
+
+/*
+Location hash support
+*/
+Brahma.app('screens').module('location', {
+
+}, function() {
+
 });
 
 /*
@@ -819,7 +857,7 @@ Brahma.app('screens').module('infinity', {
 		margin, это отключает конфликт  
 		*/
 		this.master.shiftScreen(this.master.data.shift.x,this.master.data.shift.y,function() {
-			that.master.goto([nextx,nexty], function() {
+			that.master.goto([nextx,nexty], false, function() {
 				that.master.portalGrid[fakex][fakey].processed = false;
 			});
 		});
