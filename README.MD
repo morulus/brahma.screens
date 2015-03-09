@@ -41,8 +41,16 @@ There is few simple CSS3 effects, that you can use in the slides contents. Use t
 - brahma-screen-effect-fade : will show element using fade effect when slider will become current.
 - brahma-screen-effect-zoom : will show element using zoom effect when slider will decome current.
 
-## FAQ
-How can 
+## News
+### Version 1.2.0
+- Supporting touch screen
+- The effect of the deadlock
+- Auto fill images : if slide nodeName is IMG, element converted to DIV with same background image like IMG.src.
+- Centered map display in mobile devices
+- Responsive arrows to mobile devices
+- Detecting mobile devices
+- Fixed easing prop in config
+- Changed default value of easing function
 
 ## License
 MIT
