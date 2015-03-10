@@ -2,8 +2,12 @@ Brahma.screens
 --
 Amazing widget for creating parallax fullscreen slider
 
+
 ## Usage
 To make it work, you need [BrahmaJs](http://morulus.github.io/brahma/) library and Brahma.touch plugin. See depends in [bower.json](https://github.com/morulus/brahma.screens/blob/gh-pages/bower.json).
+
+### Connection
+Connect to page 
 
 Create a node element and give id to it (or some other selector). Put inside node any elements, which will be your slides. 
 Mark the positions of slides by attributes _data-screen-x_ and _data-screen-y_ (where data-screen-x - is X coord in the grid, data-screen-y - is Y coord in the grid, capish?)
@@ -67,9 +71,6 @@ You can use a lot of copies of sliders at one page. But do not forget that the k
 - Adds titles in photogallery mode
 - Keyboard option
 
-## Issues
-- There exists a problem with smooth movements in IE10, sometimes there are strange jumps.
-
 ### Version 1.2.0
 - Supporting touch screen
 - The effect of the deadlock
@@ -80,9 +81,12 @@ You can use a lot of copies of sliders at one page. But do not forget that the k
 - Fixed easing prop in config
 - Changed default value of easing function
 
+## Issues
+- There exists a problem with smooth movements in IE10, sometimes there are strange jumps.
+
 ## License
 MIT
 
 ## Author
-Vladimir Kalmykov (@morulus)[https://github.com/morulus/]
+Vladimir Kalmykov [@morulus](https://github.com/morulus/)
 
