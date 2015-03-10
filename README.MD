@@ -18,6 +18,7 @@ The grid is a map of your slides in 2D plane. So, if you wanna to your slider wi
 ```
 
 The best way to create a photo gallery - a place photos inside the main container and enable `photogallery` option (it is enabled by defaults). 
+```html
 <div id="screens">
 	<img data-screen-x="0" data-screen-y="0" alt="Photo 1" />
 	<img data-screen-x="1" data-screen-y="0" alt="Photo 2" />
@@ -65,6 +66,9 @@ You can use a lot of copies of sliders at one page. But do not forget that the k
 - Change default duration to 650
 - Adds titles in photogallery mode
 - Keyboard option
+
+## Issues
+- There exists a problem with smooth movements in IE10, sometimes there are strange jumps.
 
 ### Version 1.2.0
 - Supporting touch screen
