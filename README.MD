@@ -20,9 +20,9 @@ The grid is a map of your slides in 2D plane. So, if you wanna to your slider wi
 The best way to create a photo gallery - a place photos inside the main container and enable `photogallery` option (it is enabled by defaults). 
 ```html
 <div id="screens">
-	<img data-screen-x="0" data-screen-y="0" alt="Photo 1" />
-	<img data-screen-x="1" data-screen-y="0" alt="Photo 2" />
-	<img data-screen-x="2" data-screen-y="0" alt="Photo 3" />
+	<img src="photo1.jpg" data-screen-x="0" data-screen-y="0" alt="Photo 1" />
+	<img src="photo2.jpg" data-screen-x="1" data-screen-y="0" alt="Photo 2" />
+	<img src="photo3.jpg" data-screen-x="2" data-screen-y="0" alt="Photo 3" />
 </div>
 ```
 This photos will be transformed into DIV elements with background. Inside these element will be placed titles, generated from alt-attribute or filename.
