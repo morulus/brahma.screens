@@ -84,5 +84,5 @@ You can use a lot of copies of sliders at one page. But do not forget that the k
 MIT
 
 ## Author
-[@morulus](ttps://github.com/morulus/)
+Vladimir Kalmykov (@morulus)[https://github.com/morulus/]
 
