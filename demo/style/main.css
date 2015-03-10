@@ -72,7 +72,19 @@ body {
 	margin:auto;
 	color:white;
 	font-family: 'Lato', "Arial";
+
+	display: -moz-box;
+	display: box;
+	display: -webkit-box;
+	box-orient: horizontal;
+	-webkit-box-orient: horizontal;
+	-moz-box-orient: horizontal;
 	
+
+	-moz-box-align:center;
+	-webkit-box-align:center;
+	box-align:center;
+
 	font-weight:100;
 	display: table;
 	width: 75%;

@@ -165,7 +165,7 @@
 		bottom:100px;
 	}
 
-	.brahma-widgets-screens > .dharma-widgets-screens-navigation-top {
+	.brahma-widgets-screens > .dharma-widgets-screens-navigation-up {
 		top:100px;
 	}
 
@@ -296,4 +296,27 @@
 	transition:all 0.5s ease;
 	-webkit-animation: screens-effect-lukas-in 1s; /* Chrome, Safari, Opera */
     animation: screens-effect-lukas-in 1s;
+}
+
+/* Fonts */
+.brahma-widgets-screens > div:first-child > * div.brahma-widgets-screens-label {
+	color: white;
+	font-family: 'Lato', "Arial";
+	font-size: 38px;
+	font-weight: 600;
+	display: block;
+	width: auto;
+	text-align: center;
+	
+	margin: 25px;
+	line-height: 52px;
+	text-align:left;
+	text-shadow: 0 0 4px rgba(255, 255, 255, 0.74);
+}
+
+@media screen and (min-width:1024px) {
+	.brahma-widgets-screens > div:first-child > * div.brahma-widgets-screens-label {
+		font-size: 42px;
+		margin: 100px;
+	}
 }

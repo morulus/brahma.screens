@@ -4,7 +4,7 @@
 			infinity: false, // Бесконечное пролистывание
 			lockDelay: false, // Задержка после перемещения перед тем как будет разрещено ещё одно действие
 			easing: 'cubic-bezier(.43,.2,.46,.8)',
-			duration: 1000, // Длительность анимации
+			duration: 650, // Длительность анимации
 			/*
 			options infinityMethod: 
 			 
@@ -25,7 +25,9 @@
 			touch: true,
 			autoFillImages: true, 
 			deadlockEffect: true, // Эффект показывает, что дальше движение невозможно
-			mobileMap: true, // На мобильных устройствах при анимации увеличивается мини-карта и отображается по центру экрана
+			keyboard: true, // Поддерживает клавиши клавиатуры
+			mobileMap: false, // На мобильных устройствах при анимации увеличивается мини-карта и отображается по центру экрана
+			debug: false
 		},
 		data: {
 			currentScreen: [0,0],
@@ -60,6 +62,8 @@
 
 		},
 		run: function() {
+
+			
 			var that = this;
 			// Convert inner content to grid
 			Brahma(this.selector).find('>*').wrapAll('div', {
@@ -78,9 +82,14 @@
 
 				if (that.config.autoFillImages && Brahma(element)[0].tagName.toLowerCase()==='img') {
 					var src = Brahma(element).attr("src");
+					var alt = Brahma(element).attr("alt") || src.replace('\\','/').split('/').reverse()[0];
 					element=Brahma(element).replace(document.createElement('DIV'), true).css({
 						"background-image": "url(\""+src+"\")"
 					});
+
+					Brahma(element).put('div',{
+						"class": "brahma-widgets-screens-label"
+					}).html(alt);
 				};
 
 				var xy = that.reserveCell(parseInt(Brahma(element).data("screen-x")),parseInt(Brahma(element).data("screen-y")), element); 
@@ -131,6 +140,7 @@
 			});
 
 			// Run keylistner
+			if (this.config.keyboard)
 			this.module('keylistner').run();
 
 			if (this.config.infinity)
@@ -157,7 +167,6 @@
 		},
 		down: function() {
 			if (!this.canIMove()) return false;
-			
 			switch (this.canIMoveDown()) {
 				case false: return this.module('edgeEffect').down(); break;
 				case 2: this.trigger('beforeMove',['down']); this.modules.infinity.portalMove('down'); break;
@@ -381,12 +390,14 @@
 			("function"===typeof callback) && callback();
 		},
 		translate: function(x, y) {
+
 			var polytransform = ["-webkit-","-ms-","-o-"];
 			
 			var transform = (Brahma.caniuse('translate3D')) ?
 			"translate3D("+(x+(this.data.shift.x*100)+this.data.advshift.x)+"%,"+(y+(this.data.shift.y*100)+this.data.advshift.y)+"%,0)" :
 			"translateX("+(x+(this.data.shift.x*100)+this.data.advshift.x)+"%) translateY("+(y+(this.data.shift.y*100)+this.data.advshift.y)+"%)";
-			
+			Brahma(this.htmlelements.screensWrapper).css(polytransform, {"animation-play-state": 'paused'});
+
 			Brahma(this.htmlelements.screensWrapper).css(polytransform, {"transform": transform});
 		},
 		moveScreen: function(x, y, immediately, callback) {
@@ -403,6 +414,7 @@
 			*/
 			var absx = (x*-1);
 			var absy = (y*-1);
+
 			this.translate( (absx*100), (absy*100));
 
 			if (immediately) {
@@ -436,6 +448,7 @@
 
 			// Add class to node
 			Brahma(this.htmlelements.screensWrapper).find('>*').removeClass('current');
+
 			Brahma(this.grid[xy[1]][xy[0]].node).addClass('current');
 
 			var x = xy[0];
@@ -528,13 +541,16 @@
 				var y = xy[y];
 			}
 
-			if ("undefined"===typeof this.grid[y]) this.grid[y] = [];
+			if ("undefined"===typeof this.grid[y]) {
+				this.grid[y] = [];
+			};
 
 			this.grid[y][x] = {
 				node: el,
 				active: Brahma(el).hasClass('screen-box-item'),
 				onVisible: []
 			};
+
 
 			// Событие добавления экрана в схему
 			this.trigger('gridAdds',[this.grid[y][x]]);
@@ -565,10 +581,10 @@ Brahma.app('screens').module('touch', function() {
 	});
 
 	var that = this;
-	this.listner.bind('swipeLeft', function() {	console.log('swipe left'); that.master.right(); });
-	this.listner.bind('swipeRight', function() { console.log('swipe right'); that.master.left(); });
-	this.listner.bind('swipeUp', function() { that.master.up();	});
-	this.listner.bind('swipeDown', function() {	that.master.down();	});
+	this.listner.bind('swipeLeft', function() {	that.master.right(); });
+	this.listner.bind('swipeRight', function() { that.master.left(); });
+	this.listner.bind('swipeUp', function() { that.master.down();	});
+	this.listner.bind('swipeDown', function() {	that.master.up();	});
 }, {
 	listner: null
 });
@@ -580,6 +596,7 @@ Brahma.app('screens').module('keylistner', {
 	run: function() {
 
 		var that = this;
+
 		Brahma(document).bind('keydown', function(e) {
 			that.master.trigger('keydown', [e]);
 			switch(e.which) {
@@ -660,8 +677,10 @@ Edge effect
 */
 Brahma.app('screens').module('edgeEffect', {
 	mod: function(coord, direct) {
+		
 		if (!this.master.config.deadlockEffect || this.master.data.moving) return false;
 		this.master.data.advshift[coord] = 25*direct;
+
 		this.master.translate(this.master.data.currentScreen[0]*-100, this.master.data.currentScreen[1]*-100);
 
 		var that = this;
