@@ -4,8 +4,8 @@ module.exports = function(grunt) {
 		less: {
 			styles: {
 		        options: {
-		          compress: true,
-		          yuicompress: true,
+		          compress: false,
+		          /*yuicompress: true,*/
 		          optimization: 2
 		        },
 		        files: {
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
 	          preserveComments: 'some'
 	        },
 	        files: {
-	          '../dist/jquery.brahma-screens.min.js': ['../dist/jquery.brahma-screens.js']
+	          '../dist/brahma.screens.min.js': ['../dist/brahma.screens.js']
 	        }
 	      },
 	      minbuild: {
@@ -81,7 +81,7 @@ module.exports = function(grunt) {
 	    watch: {
 	      js: {
 	        files: ['./js/**/*.js'], // which files to watch
-	        tasks: ['snipper:js','usebanner'],
+	        tasks: ['snipper:js','usebanner','uglify:minone'],
 	        options: {
 	          nospawn: true
 	        }
@@ -98,22 +98,27 @@ module.exports = function(grunt) {
 		    buildjs: {
 		      src: ['../req/brahma.js','../req/jquery.brahma.js','../req/brahma.touch.js','../dist/brahma.screens.js'],
 		      dest: '../jquery/plugin/jquery.brahma-screens.js',
-		    },
-		    buildcss: {
-		      src: ['../dist/brahma.screens.css'],
-		      dest: '../jquery/plugin/jquery.brahma-screens.css',
-		    },
+		    }
 		},
 		cssmin: {
-		  options: {
-		    shorthandCompacting: false,
-		    roundingPrecision: -1
-		  },
-		  target: {
-		    files: {
-		      '../build/css/brahma.screens.pack.css': ['../dist/brahma.screens.css']
-		    }
-		  }
+			jquery: {
+				options: {
+				    shorthandCompacting: false,
+				    roundingPrecision: -1
+				  },
+				  files: {
+				      '../jquery/plugin/jquery.brahma-screens.css': ['../dist/brahma.screens.css']
+				 }
+			},
+			dist: {
+				options: {
+				    shorthandCompacting: false,
+				    roundingPrecision: -1
+				  },
+				  files: {
+				      '../dist/brahma.screens.min.css': ['../dist/brahma.screens.css']
+				  }
+			}
 		},
 		release: {
 			tick: {
@@ -140,11 +145,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-release');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-banner');
 
-	grunt.registerTask('default', ['snipper:js','usebanner:dist','less:styles','watch']);
+	grunt.registerTask('default', ['snipper:js','usebanner:dist','less:styles','uglify:minone','watch']);
 	grunt.registerTask('up-tick', ['release:tick']);
 	grunt.registerTask('up-model', ['release:model']);
 	grunt.registerTask('up-version', ['release:version']);
-	grunt.registerTask('build', ['snipper:js', 'usebanner:dist', 'less:styles', 'uglify:minone', 'concat', 'uglify:minbuild', 'usebanner:jquery']);
+	grunt.registerTask('build', ['snipper:js', 'less:styles', 'usebanner:dist', 'cssmin:dist', 'uglify:minone', 'concat', 'cssmin:jquery', 'uglify:minbuild', 'usebanner:jquery']);
 };

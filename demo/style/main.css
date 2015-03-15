@@ -73,22 +73,27 @@ body {
 
 #screens .screen > article {
 	position:absolute;
-	top:0;bottom:0;left:0;right:0;
-	margin:auto;
+	top:50%;left:50%;
+	-webkit-transform:translateY(-50%) translateX(-50%);
+	-ms-transform:translateY(-50%) translateX(-50%);
+	transform:translateY(-50%) translateX(-50%);
+	
 	color:white;
 	font-family: 'Lato', "Arial";
 	font-size:32px;
 
 	display: -moz-box;
-	display: box;
 	display: -webkit-box;
+	display: -ms-box;
+	display: box;
 	box-orient: horizontal;
 	-webkit-box-orient: horizontal;
 	-moz-box-orient: horizontal;
-	
+	-ms-box-orient: horizontal;
 
 	-moz-box-align:center;
 	-webkit-box-align:center;
+	-ms-box-align:center;
 	box-align:center;
 
 	font-weight:100;

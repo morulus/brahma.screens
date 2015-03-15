@@ -3,15 +3,23 @@ Brahma.screens
 Amazing widget for creating parallax fullscreen slider
 
 
-## Usage
-To make it works, you need [BrahmaJs](http://github.com/morulus/brahma/) library and [Brahma.touch](http://github.com/morulus/brahma.touch/) plugin fot it. See depends info in [bower.json](https://github.com/morulus/brahma.screens/blob/gh-pages/bower.json).
+## Dependencies
+This plugin requires [BrahmaJs](http://github.com/morulus/brahma/) `1.3.8` and [Brahma.touch](http://github.com/morulus/brahma.touch/) `1.0.2` plugin fot it. See more info in [bower.json](https://github.com/morulus/brahma.screens/blob/gh-pages/bower.json).
 
-### Get it
-You can use bower to download it:
-```
+### Getting started
+Via [Bower](http://bower.io/):
+```shell
 bower install brahma.screens
 ```
-It will load all required components.
+Manually way. You should to download from this repo these files:
+`dist/brahma.screens.js, dist/brahma.screens.css`
+And don't forget to download required libraries.
+
+### Gettings started: ax's method
+You love jQuery and you don't like to use others. No problem.
+Download the files:
+`jquery/plugin/jquery.brahma-screens.js, `jquery/plugin/jquery.brahma-screens.css`
+Enjoy using the widget as jQuery plugin. See more info [here](#using-as-jquery-plugin).
 
 ### Connection
 Connect to the page all required js & css.
