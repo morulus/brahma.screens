@@ -4,30 +4,25 @@ Amazing widget for creating parallax fullscreen slider
 
 
 ## Usage
-To make it work, you need [BrahmaJs](http://morulus.github.io/brahma/) library and Brahma.touch plugin. See depends in [bower.json](https://github.com/morulus/brahma.screens/blob/gh-pages/bower.json).
+To make it works, you need [BrahmaJs](http://morulus.github.io/brahma/) library and [Brahma.touch](http://morulus.github.io/brahma.touch/) plugin fot it. See depends info in [bower.json](https://github.com/morulus/brahma.screens/blob/gh-pages/bower.json).
 
 ### Get it
 You can use bower to download it:
 ```
 bower install brahma.screens
 ```
-It will load all required files.
-- brahma/dist/brahma.js
-- brahma.touch/dist/brahma.touch.js
-- brahma.screens/dist/brahma.screens.js
-- brahma.screens/dist/brahma.screens.css
-- brahma.screens/dist/fonts/bsn.eot
-- brahma.screens/dist/fonts/bsn.svg
-- brahma.screens/dist/fonts/bsn.ttf
-- brahma.screens/dist/fonts/bsn.woff
+It will load all required components.
 
 ### Connection
 Connect to the page all required js & css.
 ```
-<link href="bower_components/brahma.screens/dist/brahma.screens.css" rel="stylesheet">
+<!-- BrahmaJs lib -->
 <script src="bower_components/brahma/dist/brahma.min.js" type="text/javascript"></script>
+<!-- Brahma.touch plugin -->
 <script src="bower_components/brahma.touch/dist/brahma.touch.js" type="text/javascript"></script>
+<!-- Brahma.screens widget -->
 <script src="bower_components/brahma.screens/dist/brahma.screens.js" type="text/javascript"></script>
+<link href="bower_components/brahma.screens/dist/brahma.screens.css" rel="stylesheet">
 ```
 
 ### Prepare HTML
