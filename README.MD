@@ -71,7 +71,7 @@ Look for a result. It should work.
 If doesn't. Look up for [example](http://morulus.github.io/brahma.screens/)
 
 ## Options
-- __lockDelay : Imposes a ban on the any action after the start of movement on specific time in ms. Or if value is true, on full duration of moving. _Default_: false. (This options automaticly enabled on infinity mode)
+- __lockDelay__ : Imposes a ban on the any action after the start of movement on specific time in ms. Or if value is true, on full duration of moving. _Default_: false. (This options automaticly enabled on infinity mode)
 - __easing__ : easing function of CSS animation (it can be cubic-bezier or any else CSS compatible easing). _Default_: `cubic-bezier(.43,.2,.46,.8)`
 - __duration__ : Duration of animation in ms. _Default_: 1000
 - __touch__ : Enables touch screen support. _Default_: true
