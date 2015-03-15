@@ -66,16 +66,16 @@ Look for a result. It should work.
 If doesn't. Look up for [example](http://morulus.github.io/brahma.screens/)
 
 ## Options
-- lockDelay : Imposes a ban on the any action after the start of movement on specific time in ms. Or if value is true, on full duration of moving. _Default_: false. (This options automaticly enabled on infinity mode)
-- easing : easing function of CSS animation (it can be cubic-bezier or any else CSS compatible easing). _Default_: `cubic-bezier(.43,.2,.46,.8)`
-- duration : Duration of animation in ms. _Default_: 1000
-- touch : Enables touch screen support. _Default_: true
-- mobileMap : On mobile devices (including tablet) will show map in center of screen. Default: false
-- deadlockEffect : Enables effect of endings of grid. _Default_: true
-- photogallery : To convert images to DIV elements with property background-size:cover. It makes process of creating photo-gallery easier. _Default_: false
-- infinity : Experimental & unstable mode, when slides will never ends and user can move to any direction any times. Like teleporting to another edge. _Default_: false
-- infinityMethod : Method of logic of infinity mode. Can be passage or discover. _Default_: passage
-- keyboard: Enables keyboard listner. _Default_: true
+- __lockDelay : Imposes a ban on the any action after the start of movement on specific time in ms. Or if value is true, on full duration of moving. _Default_: false. (This options automaticly enabled on infinity mode)
+- __easing__ : easing function of CSS animation (it can be cubic-bezier or any else CSS compatible easing). _Default_: `cubic-bezier(.43,.2,.46,.8)`
+- __duration__ : Duration of animation in ms. _Default_: 1000
+- __touch__ : Enables touch screen support. _Default_: true
+- __mobileMap__ : On mobile devices (including tablet) will show map in center of screen. Default: false
+- __deadlockEffect__ : Enables effect of endings of grid. _Default_: true
+- __photogallery__ : To convert images to DIV elements with property background-size:cover. It makes process of creating photo-gallery easier. _Default_: false
+- __infinity__ : Experimental & unstable mode, when slides will never ends and user can move to any direction any times. Like teleporting to another edge. _Default_: false
+- __infinityMethod__ : Method of logic of infinity mode. Can be passage or discover. _Default_: passage
+- __keyboard__: Enables keyboard listner. _Default_: true
 
 ## Special effect
 There is few simple CSS3 effects, that you can use in the slides contents. Use the special classes at sub-elements in screen:
@@ -85,8 +85,17 @@ There is few simple CSS3 effects, that you can use in the slides contents. Use t
 ## Intresting
 You can use a lot of copies of sliders at one page. But do not forget that the keyboard is one at all. You can disable it via the keyboard option, but when one keyboard is one at all - it is also interesting. Look up for example [example](http://morulus.github.io/brahma.screens/several.html)
 
+## As JQuery pluign
+This plugin has an special build for use as a plug-in of jQuery.
+```javasript
+jQuery('#selector').brahma.screens();
+```
 
 ## News
+### Version 1.2.2
+- Arrows changed to base64 SVG format
+- aviable `data-screens-arrows-style` option for slides
+
 ### Version 1.2.1
 - Disable mobileMap on defaults
 - Change default duration to 650

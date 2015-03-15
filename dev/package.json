@@ -1,0 +1,26 @@
+{
+  "name": "brahma.screens.dev",
+  "version": "1.0.0",
+  "description": "Build brahma.screens widget for BrahmaJs",
+  "main": "gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "brahma.screens",
+    "dev"
+  ],
+  "author": "morulus <vladimirmorulus@gmail.com> (http://github.com/morulus/)",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-less": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-snipper": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-banner": "latest",
+    "prompt": "~0.2.14",
+    "colors": "~1.0.3"
+  }
+}
