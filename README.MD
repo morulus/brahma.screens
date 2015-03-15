@@ -11,7 +11,9 @@ Via [Bower](http://bower.io/):
 ```shell
 bower install brahma.screens
 ```
-Manually way. You should to download from this repo these files:
+
+Or manually way. 
+You should to download from this repo these files:
 `dist/brahma.screens.js, dist/brahma.screens.css`
 And don't forget to download required libraries.
 
