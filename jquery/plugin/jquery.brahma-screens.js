@@ -1,5 +1,5 @@
 /*!
-* jQuery.brahma.screens 1.2.2 (* 15-03-2015)
+* jQuery.brahma.screens 1.2.3 (* 15-03-2015)
 * Prallax fullscreen slider
 * https://github.com/morulus/brahma.screens
 

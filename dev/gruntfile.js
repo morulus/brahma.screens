@@ -122,12 +122,12 @@ module.exports = function(grunt) {
 				report: {'../README.MD':'## News'}
 			},
 			model: {
-				degree: 3,
+				degree: 2,
 				json:  '../bower.json',
 				report: {'../README.MD':'## News'}
 			},
 			version: {
-				degree: 3,
+				degree: 1,
 				json:  '../bower.json',
 				report: {'../README.MD':'## News'}
 			}

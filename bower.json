@@ -1,6 +1,6 @@
 {
 	"name": "brahma.screens",
-	"version": "1.2.2",
+	"version": "1.2.3",
 	"authors": [
 		{
 			"name": "Vladimir Kalmykov (@morulus)",
@@ -10,11 +10,7 @@
 	"description": "Prallax fullscreen slider",
 	"main": [
 		"dist/brahma.screens.js",
-		"dist/brahma.screens.css",
-		"dist/fonts/bsn.eot",
-		"dist/fonts/bsn.svg",
-		"dist/fonts/bsn.ttf",
-		"dist/fonts/bsn.woff"
+		"dist/brahma.screens.css"
 	],
 	"moduleType": [],
 	"keywords": [
