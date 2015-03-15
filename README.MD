@@ -91,6 +91,9 @@ jQuery('#selector').brahma.screens();
 See folder `jquery` for ditails.
 
 ## News
+### Version 1.2.4
+- Adds data-attribut `data-dirty` to main container, which allows you to hide main container until it is initialized 
+
 ### Version 1.2.2
 - Arrows changed to base64 SVG format
 - aviable `data-screens-arrows-style` option for slides

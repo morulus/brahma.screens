@@ -1,5 +1,5 @@
 /*!
-* brahma.screens 1.2.3 (* 15-03-2015)
+* brahma.screens 1.2.4 (* 15-03-2015)
 * Prallax fullscreen slider
 * https://github.com/morulus/brahma.screens
 
@@ -167,6 +167,9 @@
 
 			// Select curren
 			this.goto(this.data.currentScreen, true);
+
+			// Show container
+			Brahma(this.selector).css("opacity","1");
 		},
 		up: function() {
 			if (!this.canIMove()) return false;

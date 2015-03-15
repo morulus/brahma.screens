@@ -158,6 +158,9 @@
 
 			// Select curren
 			this.goto(this.data.currentScreen, true);
+
+			// Show container
+			Brahma(this.selector).css("opacity","1");
 		},
 		up: function() {
 			if (!this.canIMove()) return false;
