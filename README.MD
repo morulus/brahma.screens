@@ -18,7 +18,7 @@ You should to download from this repo these files:
 And don't forget to download required libraries.
 
 ### Gettings started: ax's method
-You love jQuery and you don't like to use others. No problem.
+You love jQuery and you don't like to use others? No problem.
 Download the files:
 `jquery/plugin/jquery.brahma-screens.js, `jquery/plugin/jquery.brahma-screens.css`
 Enjoy using the widget as jQuery plugin. See more info [here](#using-as-jquery-plugin).
