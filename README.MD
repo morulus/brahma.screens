@@ -32,23 +32,23 @@ Connect to the page all required js & css.
 
 ### Prepare HTML
 Create a node element and give id to it (or some other selector). Put inside node any elements, which will be your slides. 
-Mark the positions of slides by attributes _data-screen-x_ and _data-screen-y_ (where data-screen-x - is X coord in the grid, data-screen-y - is Y coord in the grid, capish?)
+Mark the positions of slides by attributes _data-screens-x_ and _data-screens-y_ (where data-screens-x - is X coord in the grid, data-screens-y - is Y coord in the grid, capish?)
 
-The grid is a map of your slides in 2D plane. So, if you wanna to your slider will work in only horizontal mode, you should make data-screen-y equal 0, always. But this slider supports XY moves, so Y can have any value. To understand it, imagine that _data-screen-y_ is a number of floor, so that data-screen-x is a serial number of room. But in the case of the program, all the way around. We build this building in to the ground. So 5-th floor is a deep inside the ground, not up.
+The grid is a map of your slides in 2D plane. So, if you wanna to your slider will work in only horizontal mode, you should make data-screens-y equal 0, always. But this slider supports XY moves, so Y can have any value. To understand it, imagine that _data-screens-y_ is a number of floor, so that data-screens-x is a serial number of room. But in the case of the program, all the way around. We build this building in to the ground. So 5-th floor is a deep inside the ground, not up.
 ```html
 <div id="screens">
-	<div data-screen-x="0" data-screen-y="0">First floor, first room</div>
-	<div data-screen-x="1" data-screen-y="0">First floor, second room</div>
-	<div data-screen-x="1" data-screen-y="1">Second floor, second room</div>
+	<div data-screens-x="0" data-screens-y="0">First floor, first room</div>
+	<div data-screens-x="1" data-screens-y="0">First floor, second room</div>
+	<div data-screens-x="1" data-screens-y="1">Second floor, second room</div>
 </div>
 ```
 
 The best way to create a photo gallery - a place photos inside the main container and enable `photogallery` option (it is enabled by defaults). 
 ```html
 <div id="screens">
-	<img src="photo1.jpg" data-screen-x="0" data-screen-y="0" alt="Photo 1" />
-	<img src="photo2.jpg" data-screen-x="1" data-screen-y="0" alt="Photo 2" />
-	<img src="photo3.jpg" data-screen-x="2" data-screen-y="0" alt="Photo 3" />
+	<img src="photo1.jpg" data-screens-x="0" data-screens-y="0" alt="Photo 1" />
+	<img src="photo2.jpg" data-screens-x="1" data-screens-y="0" alt="Photo 2" />
+	<img src="photo3.jpg" data-screens-x="2" data-screens-y="0" alt="Photo 3" />
 </div>
 ```
 This photos will be transformed into DIV elements with background. Inside these element will be placed titles, generated from alt-attribute or filename.
@@ -82,14 +82,18 @@ There is few simple CSS3 effects, that you can use in the slides contents. Use t
 - brahma-screen-effect-fade : will show element using fade effect when slider will become current.
 - brahma-screen-effect-zoom : will show element using zoom effect when slider will decome current.
 
+## Making arrows black for white slides
+Use data-attribute `data-screens-arrows-style="black"` in slide's tag, to indicate that  arrows at this slide should be black.
+
 ## Intresting
 You can use a lot of copies of sliders at one page. But do not forget that the keyboard is one at all. You can disable it via the keyboard option, but when one keyboard is one at all - it is also interesting. Look up for example [example](http://morulus.github.io/brahma.screens/several.html)
 
-## As JQuery pluign
-This plugin has an special build for use as a plug-in of jQuery.
+## Using as JQuery pluign
+This plugin has an special build for use as a plug-in for jQuery.
 ```javasript
 jQuery('#selector').brahma.screens();
 ```
+See folder `jquery` for ditails.
 
 ## News
 ### Version 1.2.2
