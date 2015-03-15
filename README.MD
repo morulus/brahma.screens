@@ -4,7 +4,7 @@ Amazing widget for creating parallax fullscreen slider
 
 
 ## Usage
-To make it works, you need [BrahmaJs](http://morulus.github.io/brahma/) library and [Brahma.touch](http://morulus.github.io/brahma.touch/) plugin fot it. See depends info in [bower.json](https://github.com/morulus/brahma.screens/blob/gh-pages/bower.json).
+To make it works, you need [BrahmaJs](http://morulus.github.io/brahma/) library and [Brahma.touch](http://github.com/morulus/brahma.touch/) plugin fot it. See depends info in [bower.json](https://github.com/morulus/brahma.screens/blob/gh-pages/bower.json).
 
 ### Get it
 You can use bower to download it:
