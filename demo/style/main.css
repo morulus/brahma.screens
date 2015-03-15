@@ -194,7 +194,7 @@ body {
 }
 
 #screens .screen > article big {
-	color:rgb(0, 27, 56);
+	color:rgb(0, 0, 0);
 	font-family: 'Roboto Condensed', "Arial";
 	font-size:58px;
 	font-weight:100;
@@ -202,7 +202,7 @@ body {
 	width: auto;
 	text-align: center;
 	margin:0 0 20px 0;
-	line-height:40px;
+	text-shadow:2px -2px 1px white;
 }
 
 
@@ -269,6 +269,25 @@ position: absolute;
   top: 25%;
   width: 50%;
   height: 50%;
+}
+
+/* Home panel */
+.home-panel {
+	height: 50px;
+	border-radius: 25px;
+	width:auto;
+	position:absolute;
+	top:20px;
+	left:-25px;
+	text-align:left;
+	padding:0 25px 0 50px;
+	line-height:50px;
+	color:white;
+	font-family:"Roboto Condensed", "Arial";
+	font-weight:600;
+	background-color:black;
+	font-size:26px;
+	text-transform: uppercase;
 }
 
 /* Backgrounds */

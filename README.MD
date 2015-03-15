@@ -88,7 +88,7 @@ There is few simple CSS3 effects, that you can use in the slides contents. Use t
 - brahma-screen-effect-zoom : will show element using zoom effect when slider will decome current.
 
 ## Making arrows black for white slides
-Use data-attribute `data-screens-arrows-style="black"` in slide's tag, to indicate that  arrows at this slide should be black.
+Use data-attribute `data-screens-color-theme="black"` in slide's tag, to indicate that  arrows at this slide should be black.
 
 ## Intresting
 You can use a lot of copies of sliders at one page. But do not forget that the keyboard is one at all. You can disable it via the keyboard option, but when one keyboard is one at all - it is also interesting. Look up for example [example](http://morulus.github.io/brahma.screens/several.html)

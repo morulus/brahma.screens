@@ -1,5 +1,5 @@
 /*!
-* brahma.screens 1.2.5 (* 15-03-2015)
+* brahma.screens 1.2.6 (* 15-03-2015)
 * Prallax fullscreen slider
 * https://github.com/morulus/brahma.screens
 
@@ -54,7 +54,7 @@
 			minX: 0,
 			minY: 0,
 			locks: false, // Блокировка новый движений и действий
-			arrowsStyle: ''
+			colorTheme: ''
 		},
 		modules: {
 
@@ -103,7 +103,7 @@
 
 				var xy = that.reserveCell(parseInt(Brahma(element).data("screens-x")),parseInt(Brahma(element).data("screens-y")), {
 					node: element,
-					arrowsStyle: Brahma(element).data("screens-arrows-style") || false
+					colorTheme: Brahma(element).data("screens-color-theme") || false
 				}); 
 
 				Brahma(element).css({
@@ -477,20 +477,20 @@
 
 			// Set Arrows Style
 			setTimeout(function() {
-				if (that.grid[xy[1]][xy[0]].arrowsStyle!==that.data.arrowsStyle) {
-					Brahma(that.htmlelements.navigation_up).removeClass(that.data.arrowsStyle);
-					Brahma(that.htmlelements.navigation_down).removeClass(that.data.arrowsStyle);
-					Brahma(that.htmlelements.navigation_left).removeClass(that.data.arrowsStyle);
-					Brahma(that.htmlelements.navigation_right).removeClass(that.data.arrowsStyle);
+				if (that.grid[xy[1]][xy[0]].colorTheme!==that.data.colorTheme) {
+					Brahma(that.htmlelements.navigation_up).removeClass(that.data.colorTheme);
+					Brahma(that.htmlelements.navigation_down).removeClass(that.data.colorTheme);
+					Brahma(that.htmlelements.navigation_left).removeClass(that.data.colorTheme);
+					Brahma(that.htmlelements.navigation_right).removeClass(that.data.colorTheme);
 				};
-				if (that.grid[xy[1]][xy[0]].arrowsStyle) {
-					that.data.arrowsStyle = that.grid[xy[1]][xy[0]].arrowsStyle;
-					Brahma(that.htmlelements.navigation_up).addClass(that.grid[xy[1]][xy[0]].arrowsStyle);
-					Brahma(that.htmlelements.navigation_down).addClass(that.grid[xy[1]][xy[0]].arrowsStyle);
-					Brahma(that.htmlelements.navigation_left).addClass(that.grid[xy[1]][xy[0]].arrowsStyle);
-					Brahma(that.htmlelements.navigation_right).addClass(that.grid[xy[1]][xy[0]].arrowsStyle);
+				if (that.grid[xy[1]][xy[0]].colorTheme) {
+					that.data.colorTheme = that.grid[xy[1]][xy[0]].colorTheme;
+					Brahma(that.htmlelements.navigation_up).addClass(that.grid[xy[1]][xy[0]].colorTheme);
+					Brahma(that.htmlelements.navigation_down).addClass(that.grid[xy[1]][xy[0]].colorTheme);
+					Brahma(that.htmlelements.navigation_left).addClass(that.grid[xy[1]][xy[0]].colorTheme);
+					Brahma(that.htmlelements.navigation_right).addClass(that.grid[xy[1]][xy[0]].colorTheme);
 				} else {
-					that.data.arrowsStyle = '';
+					that.data.colorTheme = '';
 				}
 			}, this.config.duration/2);
 
@@ -581,9 +581,9 @@
 				this.grid[y] = [];
 			};
 
-			this.grid[y][x] = Brahma.extend({
+			this.grid[y][x] = Brahma.copyProps({
 				active: Brahma(data.node).hasClass('screen-box-item'),
-				arrowsStyle: false,
+				colorTheme: false,
 				onVisible: []
 			},data);
 

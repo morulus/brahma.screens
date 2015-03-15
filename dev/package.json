@@ -17,7 +17,7 @@
     "grunt-contrib-watch": "~0.6.1",
     "grunt-contrib-less": "latest",
     "grunt-contrib-uglify": "latest",
-    "grunt-contrib-snipper": "latest",
+    "grunt-snipper": "latest",
     "grunt-contrib-concat": "latest",
     "grunt-banner": "latest",
     "prompt": "~0.2.14",
