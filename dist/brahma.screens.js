@@ -1,5 +1,5 @@
 /*!
-* brahma.screens 1.2.6 (* 15-03-2015)
+* brahma.screens 1.2.6 (* 20-03-2015)
 * Prallax fullscreen slider
 * https://github.com/morulus/brahma.screens
 
@@ -115,22 +115,55 @@
 				that.data.currentScreen = xy;
 			});
 
+			// Create path group
+			var arrowSpriteId = "screens-sprite-arrow";
+			var defssvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+			document.getElementsByTagName('body')[0].appendChild(defssvg);
+			defssvg.innerHTML = '<g id="yo-a"><path  d="M13.849,54.143l3.182,2.784l26.819-28.368L16.962,0.249l-3.206,2.989l24.17,25.388L13.849,54.143z"/></g>';
+
+			// Create function that create a link to svg arrow
+			function createSvgSprite(selector) {
+				//Brahma(this).html('<svg><use xlink:href="#yo-a"></use></svg>');
+				var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
+				Brahma(this)[0].appendChild(svg);
+				var use = document.createElementNS("http://www.w3.org/2000/svg",'use');
+				use.setAttributeNS('http://www.w3.org/1999/xlink','href',"#yo-a");
+				svg.appendChild(use);
+			};
+
 			// Create navigation
 			this.htmlelements.navigation = Brahma(this.selector)
 			.tie(function() {
 				Brahma(this)
 				.put('div', {
-					"class": "dharma-widgets-screens-navigation-up"
-				}).tie(function() { that.htmlelements.navigation_up = this; Brahma(this).bind('click',function() { that.up() }); })
+					"class": "dharma-widgets-screens-navigation dharma-widgets-screens-navigation-up"
+				})
+				.tie(function() { 
+					that.htmlelements.navigation_up = this; 
+					createSvgSprite.call(this, "#"+arrowSpriteId);
+					Brahma(this).bind('click',function() { that.up() }); 
+				})
 				.and('div', {
-					"class": "dharma-widgets-screens-navigation-down"
-				}).tie(function() { that.htmlelements.navigation_down = this; Brahma(this).bind('click',function() { that.down() }); })
+					"class": "dharma-widgets-screens-navigation dharma-widgets-screens-navigation-down"
+				}).tie(function() { 
+					that.htmlelements.navigation_down = this; 
+					createSvgSprite.call(this, "#"+arrowSpriteId);
+					Brahma(this).bind('click',function() { that.down() }); 
+				})
 				.and('div', {
-					"class": "dharma-widgets-screens-navigation-left"
-				}).tie(function() { that.htmlelements.navigation_left = this; Brahma(this).bind('click',function() { that.left() });})
+					"class": "dharma-widgets-screens-navigation dharma-widgets-screens-navigation-left"
+				}).tie(function() { 
+					that.htmlelements.navigation_left = this; 
+					createSvgSprite.call(this, "#"+arrowSpriteId);
+					Brahma(this).bind('click',function() { that.left() });
+				})
 				.and('div', {
-					"class": "dharma-widgets-screens-navigation-right"
-				}).tie(function() { that.htmlelements.navigation_right = this; Brahma(this).bind('click',function() { that.right() }) })
+					"class": "dharma-widgets-screens-navigation dharma-widgets-screens-navigation-right"
+				}).tie(function() { 
+					that.htmlelements.navigation_right = this; 
+					createSvgSprite.call(this, "#"+arrowSpriteId);
+					Brahma(this).bind('click',function() { that.right() }) 
+				});
 			});
 
 			// Create map

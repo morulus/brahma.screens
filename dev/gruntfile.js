@@ -88,7 +88,7 @@ module.exports = function(grunt) {
 	      },
 	      css: {
 	      	files: ['./less/main.less'], // which files to watch
-	        tasks: ['less:styles'],
+	        tasks: ['less:styles','uglify:minone'],
 	        options: {
 	          nospawn: true
 	        }
@@ -98,6 +98,11 @@ module.exports = function(grunt) {
 		    buildjs: {
 		      src: ['../req/brahma.js','../req/jquery.brahma.js','../req/brahma.touch.js','../dist/brahma.screens.js'],
 		      dest: '../jquery/plugin/jquery.brahma-screens.js',
+		    },
+		    /* Update dependecies */
+		    updatereq: {
+		    	src: ['../../brahmajs/dist/brahma.js'],
+		    	dest: '../req/brahma.js'
 		    }
 		},
 		cssmin: {
@@ -148,7 +153,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-banner');
 
-	grunt.registerTask('default', ['snipper:js','usebanner:dist','less:styles','uglify:minone','watch']);
+	grunt.registerTask('update', ['concat:updatereq']);
+	grunt.registerTask('default', ['snipper:js','usebanner:dist','less:styles','cssmin:dist','uglify:minone','watch']);
 	grunt.registerTask('up-tick', ['release:tick']);
 	grunt.registerTask('up-model', ['release:model']);
 	grunt.registerTask('up-version', ['release:version']);
