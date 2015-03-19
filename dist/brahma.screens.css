@@ -108,9 +108,9 @@
 }
 @media screen and (min-width: 1024px) {
   .dharma-widgets-screens-navigation > svg > use {
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
   }
 }
 .dharma-widgets-screens-navigation.black {
