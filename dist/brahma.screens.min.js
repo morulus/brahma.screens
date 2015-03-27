@@ -1,5 +1,5 @@
 /*!
-* brahma.screens 1.2.6 (* 20-03-2015)
+* brahma.screens 1.2.6 (* 28-03-2015)
 * Prallax fullscreen slider
 * https://github.com/morulus/brahma.screens
 
