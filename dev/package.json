@@ -13,17 +13,16 @@
   "author": "morulus <vladimirmorulus@gmail.com> (http://github.com/morulus/)",
   "license": "ISC",
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-contrib-watch": "~0.6.1",
+    "colors": "~1.0.3",
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "^2.2.0",
+    "grunt-banner": "latest",
+    "grunt-contrib-concat": "latest",
     "grunt-contrib-less": "latest",
     "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-cssmin": "^0.12.2",
     "grunt-snipper": "latest",
-    "grunt-contrib-concat": "latest",
-    "grunt-banner": "latest",
-    "prompt": "~0.2.14",
-    "colors": "~1.0.3"
-  },
-  "dependencies": {
-    "grunt-contrib-cssmin": "^0.12.2"
+    "prompt": "~0.2.14"
   }
 }
