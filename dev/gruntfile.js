@@ -17,8 +17,7 @@ module.exports = function(grunt) {
 		autoprefixer: {
 			styles: {
 				options: {
-					browsers: ['> 1%', 'ie >= 9'],
-					map: true
+					browsers: ['> 1%', 'ie >= 9']
 				},
 				files: {
 					"../dist/brahma.screens.css": "../dist/brahma.screens.css"
