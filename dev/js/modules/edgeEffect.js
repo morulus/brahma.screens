@@ -3,6 +3,9 @@ Edge effect
 */
 Brahma.app('screens').module('edgeEffect', {
 	mod: function(coord, direct) {
+		// Collid event
+		this.master.trigger('collid',[this.master.current(), coord, direct]);
+		this.master.current().trigger('collid', [coord, direct]);
 		
 		if (!this.master.config.deadlockEffect || this.master.data.moving) return false;
 		this.master.data.advshift[coord] = 25*direct;

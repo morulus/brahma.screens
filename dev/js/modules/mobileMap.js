@@ -1,7 +1,7 @@
 Brahma.app('screens').module('mobileMap', function() {
 	var that = this;
 
-	Brahma(this.master.htmlelements.map).addClass('mobile');
+	Brahma(this.master.htmlelements.map).addClass('screens-map-mobile');
 
 	this.master.bind('movingStart', function() {
 		
@@ -14,7 +14,7 @@ Brahma.app('screens').module('mobileMap', function() {
 	});
 }, {
 	zoomMap: function() {
-		Brahma(this.master.htmlelements.map).addClass('visible');
+		Brahma(this.master.htmlelements.map).addClass('screens-visible');
 	},
 	tryUnZoomMap: function() {
 		var that = this;
@@ -23,6 +23,6 @@ Brahma.app('screens').module('mobileMap', function() {
 		}, 150);
 	},
 	unZoomMap: function() {
-		Brahma(this.master.htmlelements.map).removeClass('visible');
+		Brahma(this.master.htmlelements.map).removeClass('screens-visible');
 	}
 });

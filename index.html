@@ -9,10 +9,10 @@
 			<meta name="author" content="Vladimir Kalmykov">
 			<link rel="image_src" href="dev/thumb.jpg">
 
-			<script src="demo/vendor.js" baseurl="/" type="text/javascript"></script>
+			<script src="demo/vendor.js" baseurl="" type="text/javascript"></script>
 			<script src="req/brahma.js" type="text/javascript"></script>
 			<script src="req/brahma.touch.js" type="text/javascript"></script>
-			<script src="dist/brahma.screens.min.js" type="text/javascript"></script>
+			<script src="dist/brahma.screens.js" type="text/javascript"></script>
 			<link href="dist/brahma.screens.min.css" rel="stylesheet">
 			<link href="demo/style/main.css" rel="stylesheet">
 
@@ -21,27 +21,85 @@
 	<body class="mrls">
 		
 			<div id="screens" data-dirty>
-				<div style="background-image:url(demo/images/demo/6.jpg)" data-screens-x="0" data-screens-y="0" data-screens-page="" class="screen current">
+				<div style="background-image:url(demo/images/demo/6.jpg)" data-screens-x="1" data-screens-y="0" data-screens-page="" data-screens-pass="r" class="screen">
 					<article>
 						<div class="screen-effect-fade">
 							<h2>Brahma.Screens</h2>
-							<h3>Parallax HD slider</h3>
-							<center>made by <a href="http://github.com/morulus/" alt="Vladimir Kalmykov, @Morulus, GitHub">Vladimir Kalmykov</a> | Ver.: <a id="version" href="https://github.com/morulus/brahma.screens/tree/" alt="Brahma.screens">0.0.0</a></i></center>
+							<h3>HD slider</h3>
+							
 						</div>
 					</article>
 				</div>
-				<div style="background-image:url(demo/images/demo/4.jpg)" data-screens-color-theme="black" data-screens-x="0" data-screens-y="1" class="screen">
+				<div data-screens-x="0" data-screens-y="1" style="background-color:rgb(23, 23, 23);color:rgb(237, 237, 237);" class="screen">
 					<article>
 						<div class="screen-effect-fade">
-							<big>Create a presentation, unusual interface or a fascinating journey through the website.</big>
+							<h2>SCREENS API</h2>
+							<figure><code style="color:rgb(239, 103, 107);">.disable(x,y)</code></figure>
+							<figure><code style="color:rgb(145, 188, 80);">.enable(x,y)</code></figure>
+							<figure><code style="color:rgb(196, 54, 53);">.remove(x,y)</code></figure>
+							<figure><code style="color:rgb(117, 179, 174);">.add(x,y,config)</code></figure>
+							<figure><code style="color:rgb(185, 154, 186);">.go(x,y,callback)</code></figure>
+							<figure><code style="color:rgb(123, 166, 200);">.bind('<span data-canbe="beforeMove|afterMove|ready|enter|leave|collide">beforeMove</span>')</code></figure>
+							<figure><code style="color:rgb(206, 185, 118);">.get(x,y|selector)</code></figure>
+							<figure><code style="color:rgb(172, 178, 144);">.<span data-canbe-duration="500" data-canbe="up|down|left|right">up</span>()</code></figure>
+							<figure><code style="color:rgb(204, 153, 87);">.<span data-canbe-duration="1000" data-canbe="navigationHide|navigationShow">navigationHide</span>()</code></figure>
 						</div>
 					</article>
 				</div>
-				<img src="demo/images/demo/3.jpg" alt="Simple clever" data-screens-x="0" data-screens-y="2" />
-				<div style="background-image:url(demo/images/demo/2.jpg)" data-screens-x="1" data-screens-y="0" data-screens-page="1.html" class="screen">
+				<script>
+				// Experemental plugin CanBe
+				Brahma.app('canbe', {
+					config: {
+						duration: 250
+					},
+					element: null,
+					cursor: 0,
+					variants: [],
+					timer: null,
+					run: function(){
+
+						this.element = Brahma(this.selector).first();
+
+						// Get data set
+						var attrduration = Brahma(this.element).data("canbe-duration");
+						if (attrduration!==null) this.config.duration = parseInt(attrduration);
+
+						if (Brahma(this.element).data("canbe")===null) return false;
+						this.variants = Brahma(this.element).data("canbe").split('|');
+						// Set special style
+						Brahma(this.element).css({
+							"width": "opacity 0.5s ease",
+							"display": "inline-block",
+							"text-align": "center"
+						});
+						this.start();
+					},
+					stop: function(){
+						if (this.timer) clearInterval(this.timer);
+						return this;
+					},
+					start: function(){
+						var that = this;
+						var max = 0;
+						this.timer = setInterval(function() {
+							(that.cursor>that.variants.length-1) && (that.cursor=0);
+							Brahma(that.element).html(that.variants[that.cursor]);
+							(Brahma(that.element)[0].offsetWidth>max) && (max=Brahma(that.element)[0].offsetWidth);
+							Brahma(that.element).css("min-width", max+'px');
+							that.cursor++;
+						}, this.config.duration);
+						return this;
+					}
+				});
+				Brahma('[data-canbe]').use('canbe', {
+					duration: 100
+				});
+				</script>
+				
+				<div style="background-image:url(demo/images/demo/2.jpg)" data-screens-x="0" data-screens-y="0" data-screens-pass="rl" data-screens-page="1.html" class="screen">
 					<article>
 						<div class="screen-effect-zoom">
-							<h2 class="black">Code example:</h2>
+							<h2 class="black">Easy to use</h2>
 							<article>
 								<center>It's realy simple to create.</center>
 								<pre><code>&lt;div id=&quot;gallery&quot;&gt;
@@ -57,15 +115,19 @@
 						</div>
 					</article>
 				</div>
-				<div style="background-image:url(demo/images/demo/1.jpg)" data-screens-x="1" data-screens-y="1" class="screen">
+				<div style="background-image:#00;" data-screens-x="1" data-screens-y="1" class="screen">
 					<article>
-						<div class="screen-effect-fade">
-							<h2>Perfect for full-HD photogallery.</h2>
-						</div>
+						<center>
+							<div class="screen-effect-zoom">
+								<img src="demo/images/brahmajsavatar.png" alt="" />
+								<h2>Powered by BrahmaJs</h2>
+								<summary>Official plugin for creative experimental framework. See more info <a target="new" href="http://morulus.github.io/brahma/">here</a></summary>
+							</div>
+						</center>
 					</article>
 				</div>
 				
-				<div style="background-image:url(demo/images/demo/7.jpg)" data-screens-x="2" data-screens-y="0" data-screens-page="4.html" class="screen">
+				<div style="background-image:url(demo/images/demo/7.jpg)" data-screens-pass="bl" data-screens-x="2" data-screens-y="0" data-screens-page="4.html" class="screen">
 					<article>
 						<div class="screen-effect-lukas">
 							<h2>Any position of slides in 2D grid.</h2>
@@ -73,7 +135,7 @@
 						</div>
 					</article>
 				</div>
-				<div style="background-color:white;" data-screens-color-theme="black" data-screens-x="2" data-screens-y="1" data-screens-page="5.html" class="screen">
+				<div style="background-color:white;" data-screens-ui-fill="black" data-screens-x="2" data-screens-y="1" data-screens-page="5.html" class="screen">
 					<article>
 						<div class="screen-effect-lukas">
 							<h1 class="black">Responsive <br />and supports touch events</h1>
@@ -81,14 +143,28 @@
 					</article>
 				</div>
 				
-				<div style="background-image:url(demo/images/demo/8.jpg)" data-screens-x="2" data-screens-y="2" class="screen" data-screens-page="about.html">
+				<div style="background-color:white;" screens-current data-screens-x="1" data-screens-y="2" class="screen" data-screens-ui-fill="rgb(56, 56, 56)" data-screens-page="about.html">
 					<article>
 						<div class="screen-effect-lukas">
+
 							<center>
-								<a href="http://github.com/morulus/brahma.screens/"><button>Get it on GitHub</button></a>
-							</center>
-							<center>
-								<summary>Copyrights © <a href="http://github.com/morulus/">Vladimir Kalmykov (@morulus)</a> 2015. <a href="http://github.com/morulus/brahma.screens/blob/gh-pages/LICENSE.MD">The MIT License.</a></summary>
+								<article>
+									<h3 class="dark">This plugin lives on GitHub</h3>
+									<img src="demo/images/github.png" alt="Lives on GitHub" height="100px">
+									<div style="color:black;">v. <span id="version">x.x.x</span></div>
+									<a href="http://github.com/morulus/brahma.screens/"><button>Getting started</button></a>
+									<div class="row">
+										<div class="col-md-6">
+											<summary class="minidark">
+												<p>This software is distributed under MIT license. Author of plugin is <a href="http://github.com/morulus">Vladimir Kalmykov (@morulus)</a>. You can use this plugin for any purpose, provided the name of the author and the official <a href="http://github.com/morulus/brahma.screens/">source address</a> will be present in source code of your programm. This plugin works on the basis of the BrahmaJs framework. You will need to install all the necessary dependencies that would make it work. This plug-in, as well as any product of the BrahmaJs project, is provided "as is". The author is not liable for any consequences of their use.</p>
+											</summary>
+										</div>
+										<div class="col-md-3"></div>
+										<div class="col-md-3"></div>
+									</div>
+									
+								</article>
+								
 							</center>
 						</div>
 					</article>
@@ -97,9 +173,7 @@
 			</div>
 			<div class="centered">
 				<div id="tutorial-keyboard"><img src="demo/images/tutorial-keyboard.png" alt=""></div>
-				<div class="home-panel">
-					Morulus
-				</div>
+				
 				<div class="share-panel">
 					<a href="http://github.com/morulus/brahma.screens/" class="circle">
 						<svg version="1.1" id="Github" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 92 92" style="enable-background:new 0 0 92 92;" xml:space="preserve">
@@ -132,17 +206,21 @@
 				</div>
 			</div>
 		<script>
-			Brahma("#screens").app('screens', {
+			var demo = Brahma("#screens").app('screens', {
 				infinity: false,
-				infinityMethod: 'passage'
+				infinityMethod: 'passage',
+				easing: 'cubic-bezier(0.39, 0.575, 0.565, 1)',
+				duration: 650
 			})
 			.bind('keydown', function() {
 				Brahma("#tutorial-keyboard").css(['-webkit-'],{'transition':'opacity 1s ease'}).css({'opacity': 0});
 			}, true);
 			vendor.getJson('bower.json', function(data) {
-				var node = Brahma("#version");
-				node.html(data.version);
-				if (node.attr("href")) node.attr("href", node.attr("href")+data.version);
+				setTimeout(function() {
+					var node = Brahma("#version");
+					node.html(data.version);
+					if (node.length>0&&node.attr("href")!==null) (node.attr("href", node.attr("href")+data.version));
+				},200);
 			});
 		</script>
 		<script src="demo/highlight.min.js"></script>

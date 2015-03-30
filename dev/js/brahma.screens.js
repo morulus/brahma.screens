@@ -1,4 +1,6 @@
 ;(function($$) {
+	<%=$.snippet('internals/screenPrototype.js')%>
+
 	$$.app('screens', {
 		config: {
 			infinity: false, // Бесконечное пролистывание
@@ -27,10 +29,11 @@
 			deadlockEffect: true, // Эффект показывает, что дальше движение невозможно
 			keyboard: true, // Поддерживает клавиши клавиатуры
 			mobileMap: false, // На мобильных устройствах при анимации увеличивается мини-карта и отображается по центру экрана
+			uiFill: 'white',
 			debug: false
 		},
 		data: {
-			currentScreen: [0,0],
+			currentScreen: false,
 			shift: {
 				x:0,y:0
 			},
@@ -45,7 +48,7 @@
 			minX: 0,
 			minY: 0,
 			locks: false, // Блокировка новый движений и действий
-			colorTheme: ''
+			uiFill: ''
 		},
 		modules: {
 
@@ -60,11 +63,9 @@
 
 		],
 		htmlelements: {
-
+			mapElements: []
 		},
 		run: function() {
-
-			
 			var that = this;
 			// Convert inner content to grid
 			Brahma(this.selector).find('>*').wrapAll('div', {
@@ -73,43 +74,29 @@
 
 			this.htmlelements.screensWrapper = Brahma(this.selector).find('>div');
 
-			Brahma(this.selector).addClass('brahma-widgets-screens');
+			Brahma(this.selector).addClass('brahma-screens');
+			var first=false,x,y;
 			// Build grid
 			Brahma(this.htmlelements.screensWrapper).find('>*').each(function() {
 				var element = this;
 				/*
 					Автоматческое преобразование IMG в DIV
 				*/
-				if (that.config.autoFillImages && Brahma(element)[0].tagName.toLowerCase()==='img') {
-					var src = Brahma(element).attr("src");
-					var alt = Brahma(element).attr("alt") || src.replace('\\','/').split('/').reverse()[0];
-					element=Brahma(element).replace(document.createElement('DIV'), true).css({
-						"background-image": "url(\""+src+"\")"
-					});
-
-					Brahma(element).put('div',{
-						"class": "brahma-widgets-screens-label"
-					}).html(alt);
-				};
-
-				var xy = that.reserveCell(parseInt(Brahma(element).data("screens-x")),parseInt(Brahma(element).data("screens-y")), {
-					node: element,
-					colorTheme: Brahma(element).data("screens-color-theme") || false
-				}); 
-
-				Brahma(element).css({
-					left: ((xy[0])*100)+'%',
-					top: ((xy[1])*100)+'%'
+				x = parseInt(Brahma(element).data("screens-x"));
+				y = parseInt(Brahma(element).data("screens-y"));
+				if (!first) first = [x,y];
+				that.initScreen(x, y, this, {
+					uiFill: Brahma(element).data("screens-ui-fill") || false,
+					enabled: Brahma(element).attr("screens-disabled")===null
 				});
-
-				if (Brahma(element).hasClass("current"))
-				that.data.currentScreen = xy;
 			});
+			if (!this.data.currentScreen) this.data.currentScreen = first;
 
 			// Create path group
 			var arrowSpriteId = "screens-sprite-arrow";
 			var defssvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 			document.getElementsByTagName('body')[0].appendChild(defssvg);
+			defssvg.style.display = 'none';
 			defssvg.innerHTML = '<g id="yo-a"><path  d="M13.849,54.143l3.182,2.784l26.819-28.368L16.962,0.249l-3.206,2.989l24.17,25.388L13.849,54.143z"/></g>';
 
 			// Create function that create a link to svg arrow
@@ -120,6 +107,8 @@
 				var use = document.createElementNS("http://www.w3.org/2000/svg",'use');
 				use.setAttributeNS('http://www.w3.org/1999/xlink','href',"#yo-a");
 				svg.appendChild(use);
+				use.style.fill = that.config.uiFill;
+				return use;
 			};
 
 			// Create navigation
@@ -127,32 +116,33 @@
 			.tie(function() {
 				Brahma(this)
 				.put('div', {
-					"class": "dharma-widgets-screens-navigation dharma-widgets-screens-navigation-up"
+					"class": "brahma-screens-navigation brahma-screens-navigation-up"
 				})
 				.tie(function() { 
+
 					that.htmlelements.navigation_up = this; 
-					createSvgSprite.call(this, "#"+arrowSpriteId);
+					that.htmlelements.navigation_up_figure = createSvgSprite.call(this, "#"+arrowSpriteId);
 					Brahma(this).bind('click',function() { that.up() }); 
 				})
 				.and('div', {
-					"class": "dharma-widgets-screens-navigation dharma-widgets-screens-navigation-down"
+					"class": "brahma-screens-navigation brahma-screens-navigation-down"
 				}).tie(function() { 
 					that.htmlelements.navigation_down = this; 
-					createSvgSprite.call(this, "#"+arrowSpriteId);
+					that.htmlelements.navigation_down_figure = createSvgSprite.call(this, "#"+arrowSpriteId);
 					Brahma(this).bind('click',function() { that.down() }); 
 				})
 				.and('div', {
-					"class": "dharma-widgets-screens-navigation dharma-widgets-screens-navigation-left"
+					"class": "brahma-screens-navigation brahma-screens-navigation-left"
 				}).tie(function() { 
 					that.htmlelements.navigation_left = this; 
-					createSvgSprite.call(this, "#"+arrowSpriteId);
+					that.htmlelements.navigation_left_figure = createSvgSprite.call(this, "#"+arrowSpriteId);
 					Brahma(this).bind('click',function() { that.left() });
 				})
 				.and('div', {
-					"class": "dharma-widgets-screens-navigation dharma-widgets-screens-navigation-right"
+					"class": "brahma-screens-navigation brahma-screens-navigation-right"
 				}).tie(function() { 
 					that.htmlelements.navigation_right = this; 
-					createSvgSprite.call(this, "#"+arrowSpriteId);
+					that.htmlelements.navigation_right_figure = createSvgSprite.call(this, "#"+arrowSpriteId);
 					Brahma(this).bind('click',function() { that.right() }) 
 				});
 			});
@@ -160,7 +150,7 @@
 			// Create map
 			this.htmlelements.map = Brahma(this.selector)
 			.put('div', {
-				"class": "dharma-widgets-screens-map"
+				"class": "brahma-screens-map"
 			});
 
 			// Build map
@@ -194,6 +184,36 @@
 
 			// Show container
 			Brahma(this.selector).css("opacity","1");
+		},
+		initScreen : function(x,y,element,config) {
+
+			if (this.config.autoFillImages && Brahma(element)[0].tagName.toLowerCase()==='img') {
+				var src = Brahma(element).attr("src");
+				var alt = Brahma(element).attr("alt") || src.replace('\\','/').split('/').reverse()[0];
+				element=Brahma(element).replace(document.createElement('DIV'), true).css({
+					"background-image": "url(\""+src+"\")"
+				});
+
+				Brahma(element).put('div',{
+					"class": "brahma-screens-label"
+				}).html(alt);
+			};
+
+			var xy = this.reserveCell(x,y, Brahma.copyProps(config,{
+				node: element
+			}));
+
+			Brahma(element).css(Brahma.extend({
+				left: ((xy[0])*100)+'%',
+				top: ((xy[1])*100)+'%'
+			}, 
+			("object"==typeof config.css ? config.css : {})
+			));
+
+			if (Brahma(element).attr("screens-current")!==null)
+			this.data.currentScreen = xy;
+
+			return this.grid[xy[1]][xy[0]];
 		},
 		up: function() {
 			if (!this.canIMove()) return false;
@@ -231,27 +251,60 @@
 			}
 		},
 		rebuildMap : function() {
-			Brahma(this.htmlelements.map).empty();
 			var that = this;
+			// Unbind all events listners to avoid memory leaks
+			for (var i=0;i<that.htmlelements.mapElements.length;i++){
+				Brahma(that.htmlelements.mapElements[i]).unbind('click');
+			};
+			Brahma(this.htmlelements.map).empty();
+			this.htmlelements.mapElements = [];
+
 			for (var y = 0; y<this.grid.length;y++) {
-				if (typeof this.grid[y]!=="undefined") (function(wrapper, layer) {
-					for (var x = 0;x<layer.length;x++) {
-						(function(x,y) {
-							Brahma(wrapper)
-							.put('div', {
-								"class": "screen-box-"+("undefined"===typeof layer[x] ? "empty" : "item"),
-								"data-coords": y+'x'+x
-							})
-							.bind('click',function() {
-								
-									if (Brahma(this).hasClass('screen-box-item')) that.goto([x,y]);
-							});
-						})(x,y);
-					}
-				}).call(this, Brahma(this.htmlelements.map)
+				if (typeof this.grid[y]!=="undefined") 
+				{
+					(function(wrapper, layer) {
+						for (var x = 0;x<layer.length;x++) {
+							(function(x,y) {
+								var disabled = "undefined"===typeof layer[x] || !layer[x].enabled;
+								var mapItem = Brahma(wrapper)
+								.put('div', {
+									"class": "screen-box-"+(disabled ? "empty" : "item"),
+									"data-coords": y+'x'+x
+								});
+
+								mapItem.tie(function() {
+									if (that.data.currentScreen[0]===x&&that.data.currentScreen[1]===y) {
+										this.addClass('screens-current');
+									};
+									!(disabled) && (
+										that.htmlelements.mapElements.push(this[0]),
+										this.css("background-color", that.config.uiFill)
+									);
+								});
+								if (!disabled) {
+									delete disabled;
+									mapItem
+									.bind('click',function() {
+										that.goto([x,y]);
+									});
+								};
+							})(x,y);
+						}
+					}).call(this, Brahma(this.htmlelements.map)
+						.put('div', {
+							"class": "screen-box-layer"
+						}), this.grid[y]);	
+				}
+				else {
+					Brahma(this.htmlelements.map)
 					.put('div', {
 						"class": "screen-box-layer"
-					}), this.grid[y]);	
+					})
+					.put('div', {
+						"class": "screen-box-empty",
+						"data-coords": y+'x0'
+					});
+				}
 			};
 		},
 		navigationHide : function(thing) {
@@ -307,6 +360,7 @@
 			if (
 				this.grid[this.data.currentScreen[1]-1] && 
 				this.grid[this.data.currentScreen[1]-1][this.data.currentScreen[0]]
+				&& this.grid[this.data.currentScreen[1]-1][this.data.currentScreen[0]].enabled
 			)			
 			return true;
 			return false;
@@ -330,6 +384,7 @@
 			if (
 				this.grid[this.data.currentScreen[1]+1] && 
 				this.grid[this.data.currentScreen[1]+1][this.data.currentScreen[0]]
+				&& this.grid[this.data.currentScreen[1]+1][this.data.currentScreen[0]].enabled
 			) return true;
 			return false;
 		},
@@ -341,7 +396,7 @@
 				)
 			) return 2;
 			if (
-				this.grid[this.data.currentScreen[1]][this.data.currentScreen[0]-1]
+				this.grid[this.data.currentScreen[1]][this.data.currentScreen[0]-1] && this.grid[this.data.currentScreen[1]][this.data.currentScreen[0]-1].enabled
 			)
 			return true;
 			return false;
@@ -356,13 +411,13 @@
 				)
 			) return 2;
 			if (
-				this.grid[this.data.currentScreen[1]][this.data.currentScreen[0]+1]
+				this.grid[this.data.currentScreen[1]][this.data.currentScreen[0]+1] && this.grid[this.data.currentScreen[1]][this.data.currentScreen[0]+1].enabled
 			)
 			return true;
 			return false;
 		},
 		/*
-		Дает разрешение да движение  
+		Дает разрешение на движение  
 		*/
 		canIMove : function() {
 			if (this.data.locks) return false;
@@ -483,38 +538,56 @@
 			if (!this.canIMove()) {
 				return false; // Запрет на движение, но это не должно происходить в этой функции
 			}
-			this.data.currentScreen = xy;
+			if (!(this.data.currentScreen[0]===xy[0]&&this.data.currentScreen[1]===xy[1])) {
+				this.trigger('leave',[this.current()]);
+				this.current().trigger('leave');
+			};
 
 			// Add class to node
-			Brahma(this.htmlelements.screensWrapper).find('>*').removeClass('current');
+			Brahma(this.htmlelements.screensWrapper).find('>*').removeClass('screens-current');
 
-			Brahma(this.grid[xy[1]][xy[0]].node).addClass('current');
+			Brahma(this.grid[xy[1]][xy[0]].node).addClass('screens-current');
 
 			var x = xy[0];
 			var y = xy[1];
 
+			this.data.currentScreen = xy;
 
 			this.data.movingStartTime = new Date().getTime();
 			this.data.moving++;
+
+			this.get(xy[0], xy[1]).trigger('enter');
+			this.trigger('enter', [this.get(xy[0], xy[1])]);
+
 			var that = this;
-			this.trigger('movingStart');
+			this.trigger('beforeMove');
+
+			setTimeout(function() {
+				if (that.grid[xy[1]][xy[0]].uiFill) {
+					for (var i = 0; i<that.htmlelements.mapElements.length;i++) {
+						that.htmlelements.mapElements[i].style.backgroundColor = that.grid[xy[1]][xy[0]].uiFill;
+					}
+				} else {
+					for (var i = 0; i<that.htmlelements.mapElements.length;i++) {
+						that.htmlelements.mapElements[i].style.backgroundColor = that.config.uiFill;
+					}
+				}
+			}, this.config.duration/4);
 
 			// Set Arrows Style
 			setTimeout(function() {
-				if (that.grid[xy[1]][xy[0]].colorTheme!==that.data.colorTheme) {
-					Brahma(that.htmlelements.navigation_up).removeClass(that.data.colorTheme);
-					Brahma(that.htmlelements.navigation_down).removeClass(that.data.colorTheme);
-					Brahma(that.htmlelements.navigation_left).removeClass(that.data.colorTheme);
-					Brahma(that.htmlelements.navigation_right).removeClass(that.data.colorTheme);
-				};
-				if (that.grid[xy[1]][xy[0]].colorTheme) {
-					that.data.colorTheme = that.grid[xy[1]][xy[0]].colorTheme;
-					Brahma(that.htmlelements.navigation_up).addClass(that.grid[xy[1]][xy[0]].colorTheme);
-					Brahma(that.htmlelements.navigation_down).addClass(that.grid[xy[1]][xy[0]].colorTheme);
-					Brahma(that.htmlelements.navigation_left).addClass(that.grid[xy[1]][xy[0]].colorTheme);
-					Brahma(that.htmlelements.navigation_right).addClass(that.grid[xy[1]][xy[0]].colorTheme);
+				if (that.grid[xy[1]][xy[0]].uiFill) {
+					that.data.uiFill = that.grid[xy[1]][xy[0]].uiFill;
+					Brahma(that.htmlelements.navigation_up_figure).css("fill", that.grid[xy[1]][xy[0]].uiFill);
+					Brahma(that.htmlelements.navigation_down_figure).css("fill", that.grid[xy[1]][xy[0]].uiFill);
+					Brahma(that.htmlelements.navigation_left_figure).css("fill", that.grid[xy[1]][xy[0]].uiFill);
+					Brahma(that.htmlelements.navigation_right_figure).css("fill", that.grid[xy[1]][xy[0]].uiFill);
 				} else {
-					that.data.colorTheme = '';
+					Brahma(that.htmlelements.navigation_up_figure).css("fill", that.config.uiFill);
+					Brahma(that.htmlelements.navigation_down_figure).css("fill", that.config.uiFill);
+					Brahma(that.htmlelements.navigation_left_figure).css("fill", that.config.uiFill);
+					Brahma(that.htmlelements.navigation_right_figure).css("fill", that.config.uiFill);
+					that.data.uiFill = '';
 				}
 			}, this.config.duration/2);
 
@@ -523,7 +596,7 @@
 
 				that.data.movingEndTime = new Date().getTime();
 				that.data.moving--;
-				that.trigger('movingEnd');
+				that.trigger('afterMove');
 			});
 
 
@@ -534,6 +607,18 @@
 			слайды  
 			*/
 
+			this.recalcNavigation();
+
+			// Select item in map
+			Brahma(this.htmlelements.map).find('>div>div').removeClass("screens-current");
+			Brahma(this.htmlelements.map).find('div[data-coords='+y+'x'+x+']').addClass("screens-current");
+		},
+		/* Перерасчет всего пользовательского интерфейса */
+		recalcUI: function() {
+			this.recalcNavigation();
+			this.rebuildMap();
+		},
+		recalcNavigation: function() {
 			/*
 			Расчет стрелки вверх. Слайд не должен ровняться нулю или должен сущестовать 
 			предыдущий слайда. Всё это истинно только если выключен режим `infinity` 
@@ -575,10 +660,70 @@
 			if (!this.canIMoveRight())
 			this.navigationHide('right');
 			else this.navigationShow('right');
+		},
+		disable: function(x,y) {
+			(this.grid[y] && this.grid[y][x]) && (this.grid[y][x].enabled=false);
+			this.recalcUI();
+			return this;
+		},
+		enable: function(x,y) {
+			(this.grid[y] && this.grid[y][x]) && (this.grid[y][x].enabled=true);
+			this.recalcUI();
+			return this;
+		},
+		/*
+		Возвращает объект экрана. 
+		Объект может быть получен двумя способами:
+		1. передать в функцию x и y координаты экрана get(0,1);
+		2. передать селектор экрана get("#myscreen");
+		*/
+		get: function() {
+			if (arguments.length===1) {
+				var src = Brahma(arguments[0]);
+				var x = parseInt(src.data("screens-x"));
+				var y = parseInt(src.data("screens-y"));
+				if ( (x&y) && this.grid[y] && this.grid[x]) {
+					return this.grid[y][x];
+				}
+			} else if (this.grid[arguments[1]] && this.grid[arguments[1]][arguments[0]]) {
+				return this.grid[arguments[1]][arguments[0]];
+			};
+			
+			return null;
+		},
+		current: function() {
+			return this.grid[this.data.currentScreen[1]][this.data.currentScreen[0]];
+		},
+		remove: function(x,y) {
+			if (this.grid[y] && this.grid[y][x]) {
 
-			// Select item in map
-			Brahma(this.htmlelements.map).find('>div>div').removeClass("current");
-			Brahma(this.htmlelements.map).find('div[data-coords='+y+'x'+x+']').addClass("current");
+				Brahma(this.grid[y][x].node).remove();
+
+				delete this.grid[y][x];
+
+				if (this.grid[y].length===0) delete this.grid[y];
+			};
+			if (this.data.currentScreen[0]===x&&this.data.currentScreen[1]===y) {
+				// Hm... 
+			};
+			this.recalcUI();
+			return this;
+		},
+		add: function(x,y, config) {
+			// Remove old if exists
+			if (this.grid[y] && this.grid[y][x]) this.remove(x,y);
+			
+			var node = Brahma(this.htmlelements.screensWrapper).put('div', {
+				"data-screens-x": x,
+				"data-screens-y": y
+			});
+			
+			var scr = this.initScreen(x,y,node,config||{});
+
+			// Refresh UI
+			this.recalcUI();
+
+			return scr;
 		},
 		// Регистрирует элемент в сетке
 		reserveCell : function (x,y,data) {
@@ -605,11 +750,16 @@
 				this.grid[y] = [];
 			};
 
-			this.grid[y][x] = Brahma.copyProps({
+			// Создаем новый объект для экрана
+			this.grid[y][x] = this.create('screen', {}, [this]);
+			Brahma.copyProps(this.grid[y][x], Brahma.copyProps({
+				x: x,
+				y: y,
 				active: Brahma(data.node).hasClass('screen-box-item'),
-				colorTheme: false,
-				onVisible: []
-			},data);
+				uiFill: false,
+				onVisible: [],
+				enabled: true
+			},data));
 
 			// Событие добавления экрана в схему
 			this.trigger('gridAdds',[this.grid[y][x]]);

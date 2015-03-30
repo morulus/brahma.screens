@@ -101,6 +101,12 @@ jQuery('#selector').brahma.screens();
 See folder `jquery` for ditails.
 
 ## News
+### Version 1.2.8
+- Adds config uiFill that which allows you to specify the color of the arrows and maps
+
+### Version 1.2.7
+- Changed namespaces
+
 ### Version 1.2.4
 - Adds data-attribut `data-dirty` to main container, which allows you to hide main container until it is initialized 
 
